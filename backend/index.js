@@ -8,6 +8,7 @@ import pg from "pg"
 import bcrypt, { hash } from "bcrypt"
 import jwt from "jsonwebtoken"
 import multer from "multer"
+import forge from "node-forge"
 
 const app = express()
 
@@ -39,6 +40,16 @@ const db = new pg.Client({
     console.log("Connected to database!")
   })
 
+// // Generate a new key pair
+// const keys = forge.pki.rsa.generateKeyPair({ bits: 2048 });
+
+// // Convert the keys to PEM format
+// const privateKeyPem = forge.pki.privateKeyToPem(keys.privateKey);
+// const publicKeyPem = forge.pki.publicKeyToPem(keys.publicKey);
+
+// console.log(privateKeyPem);
+// console.log(publicKeyPem);
+
   app.post("/signup", upload.none(), async (req, res) => {
     const { name, email, password, role } = req.body;
 
@@ -65,6 +76,28 @@ const db = new pg.Client({
     }
 });
 
+app.post("/login", upload.none(), async (req, res) => {
+  const { email, password} = req.body
+
+  try {
+    const result = await db.query("SELECT * FROM users WHERE email=$1", [email])
+    if(result.rows.length > 0) {
+      const user = result.rows[0]
+
+      const isPasswordMatch = await bcrypt.compare(password, user.password)
+
+      if(isPasswordMatch) {
+        const token = jwt.sign({userId: user.id, role: user.role}, process.env.JWT_PRIVATE_KEY, {expiresIn: '1hr'})
+        res.json({token: token})
+      }
+      else{
+        res.status(400).json({success: false, message: "Invalid email or password"})
+      }
+    }
+  } catch(err) {
+    res.json({success: false, message: "Error in logging"})
+  }
+})
 
 
 
