@@ -25,6 +25,7 @@ const corsOptions = {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
 const storage = multer.diskStorage({
@@ -129,6 +130,21 @@ app.post("/login", upload.none(), async (req, res) => {
   }
 });
 
+app.get("/products", async (req, res) => {
+  try {
+    const response = await db.query("SELECT name, description, price, available, user_id FROM products")
+    if(response.rows.length > 0) {
+      return res.json({products: response.rows})
+    }
+    else {
+      return res.json({success: false, message: "No products found!"})
+    }
+  } catch(err) {
+    console.log("Error in fetching data: ", err)
+    res.json({success: false, message: "Error in fetching data"})
+  }
+})
+
 app.post("/add-product", upload.single("product"), async (req, res) => {
   const { name, description, price } = req.body;
   const file = req.file;
@@ -140,7 +156,6 @@ app.post("/add-product", upload.single("product"), async (req, res) => {
   }
 
   const filePath = path.join("/images", file.filename); // Relative path for database storage
-  console.log(filePath);
 
   try {
     await db.query(
@@ -153,6 +168,24 @@ app.post("/add-product", upload.single("product"), async (req, res) => {
     res.json({ success: false, message: "Error in storing product" });
   }
 });
+
+app.post('/delete-product', async (req, res) => {
+  const productId = req.body.productId
+
+  try{
+    const response = await db.query("SELECT * FROM products WHERE id=$1", [productId])
+    if(response.rows.length > 0) {
+      await db.query("DELETE FROM products WHERE id=$1", [productId])
+      return res.json({success: true, message: "Product deleted succesfully"})
+    }
+    else {
+      return res.json({success: false, message: "Product not found"})
+    }
+  } catch(err) {
+    console.log("error in deleting product: ", err)
+    res.json({success: false, message: "Error in deleting product"})
+  }
+})
 
 app.listen(process.env.PORT, (err) => {
   console.log("Server is running");
