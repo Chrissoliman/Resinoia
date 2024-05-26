@@ -5,3 +5,13 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     role VARCHAR(25) NOT NULL
 );
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(25) UNIQUE NOT NULL,
+    description TEXT NOT NULL,
+    price INTEGER NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    available BOOLEAN DEFAULT TRUE,
+    date DATE DEFAULT CURRENT_DATE
+);
