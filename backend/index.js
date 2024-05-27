@@ -169,6 +169,32 @@ app.post("/add-product", upload.single("product"), async (req, res) => {
   }
 });
 
+app.post("/update-product", upload.single("product"), async (req, res) => {
+  const { name, description, price, productId } = req.body;
+  const file = req.file;
+
+  console.log(file)
+
+  if (!file) {
+    return res
+      .status(400)
+      .json({ success: false, message: "No file uploaded" });
+  }
+
+  const filePath = path.join("/images", file.filename); // Relative path for database storage
+
+  try {
+    await db.query(
+      "UPDATE products SET name=$1, description=$2, price=$3, image=$4, user_id=$5 WHERE id=$6;",
+      [name, description, price, filePath, 1, productId]
+    );
+    res.json({ success: true, message: "Product updated successfully" });
+  } catch (err) {
+    console.log("Error in updating product in database:", err);
+    res.json({ success: false, message: "Error in storing product" });
+  }
+})
+
 app.post('/delete-product', async (req, res) => {
   const productId = req.body.productId
 
