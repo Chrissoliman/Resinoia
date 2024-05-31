@@ -1,3 +1,5 @@
+import Product from "@/components/Product";
+
 export default function NewProduct() {
   return (
     <>
@@ -12,6 +14,7 @@ export default function NewProduct() {
       </div>
 
       <hr class="my-8 h-px border-0 bg-gray-300" />
+      <Product />
     </>
   );
 }
