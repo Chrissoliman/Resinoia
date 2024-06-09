@@ -22,11 +22,9 @@ export default NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      console.log("Session callback:", session);
       return session;
     },
     async jwt({ token, user }) {
-      console.log("JWT callback:", token);
       return token;
     },
   },

@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 export default function mongooseConnect() {
 
     if(mongoose.connection.readyState === 1) {
-        return mongoose.connection.asPromise()
+        return mongoose.connection.asPromise() // console.log("Already connected to database")
     }
     else {
         const uri = process.env.MONGODB_URI
-        return mongoose.connect(uri)
+        return mongoose.connect(uri)  //console.log("Connecting to database")
     }
 }
