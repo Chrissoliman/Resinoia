@@ -17,4 +17,20 @@ export default async function handle(req, res) {
 
         res.json(productDoc)
     }
+
+    if( method == 'GET') {
+        if(req.query?.id) {
+            res.json(await Product.findOne(req.query.id))
+        }
+        else{
+            res.json(await Product.find())
+        }
+    }
+
+    if( method == 'DELETE' ) {
+        if(req.query.id) {
+            await Product.deleteOne({_id: req.query.id})
+            res.json(true)
+        }
+    }
 }
