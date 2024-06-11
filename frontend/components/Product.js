@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
+import toast from "react-hot-toast";
 
 export default function Product({
   _id,
@@ -33,8 +34,10 @@ export default function Product({
     const data = { title, description, price, ...images };
     if(_id) {
       await axios.put("/api/products", {...data, _id})
+      toast.success('Product Updated!')
     } else {
       await axios.post("/api/products", data);
+      toast.success('Product Created!')
     }
 
     setRedirect(true);
