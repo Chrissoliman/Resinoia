@@ -78,7 +78,7 @@ export default function Products() {
                               {product.price}
                             </td>
                             <td class="flex justify-end gap-4 px-6 py-4 font-medium">
-                              <Link href="" className="text-red-700">Delete</Link>
+                              <Link href={'/products/delete/' + product._id} className="text-red-700">Delete</Link>
                               <Link href={'/products/edit/' + product._id}  class="text-green-700">Edit</Link></td>
                           </tr>
                         </tbody>
