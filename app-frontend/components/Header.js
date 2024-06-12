@@ -31,7 +31,7 @@ export default function Header() {
             <nav aria-label="Global" class="hidden md:block">
               <ul class="flex items-center gap-6 text-sm ">
                 <li>
-                  <Link class={pathname == "/" ? active : inactive} href="#">
+                  <Link class={pathname == "/" ? active : inactive} href="/">
                     {" "}
                     Home{" "}
                   </Link>

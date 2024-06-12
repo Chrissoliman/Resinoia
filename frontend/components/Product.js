@@ -31,7 +31,9 @@ export default function Product({
       await Promise.all(uploadImagesQueue);
     }
 
-    const data = { title, description, price, ...images };
+    console.log(images)
+    const flatImages = images.flat();
+    const data = { title, description, price, images: flatImages };
     if(_id) {
       await axios.put("/api/products", {...data, _id})
       toast.success('Product Updated!')
