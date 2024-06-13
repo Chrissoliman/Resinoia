@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <>
       <header class="bg-white border-b border-primary border-opacity-50">
-        <div class="mx-auto flex h-16 max-w-screen-2xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto flex h-14 max-w-screen-2xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <a class="block text-primary" href="#">
             <span class="sr-only">Home</span>
             <svg
