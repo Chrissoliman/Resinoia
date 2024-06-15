@@ -1,9 +1,12 @@
+import { CartContext } from "@/lib/cartContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 
 export default function Header() {
   const router = useRouter();
   const { pathname } = router;
+  const {cartProducts} = useContext(CartContext)
 
   const active = "text-primary transition hover:text-secondary font-bold";
   const inactive =
@@ -69,7 +72,7 @@ export default function Header() {
                 </Link>
 
                 <Link
-                  class="hidden rounded-md  text-sm font-medium  transition hover:text-green-600/75 sm:block"
+                  class="group rounded-md  text-sm font-medium flex  transition hover:text-green-600/75"
                   href="#"
                 >
                   <svg
@@ -86,6 +89,9 @@ export default function Header() {
                       d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
                     />
                   </svg>
+                  <span className="text-primary font-bold ml-1 group-hover:text-text">
+                    {cartProducts.length}
+                  </span>
                 </Link>
               </div>
 
