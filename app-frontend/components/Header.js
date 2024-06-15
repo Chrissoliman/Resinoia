@@ -13,7 +13,7 @@ export default function Header() {
     "text-gray-500 transition hover:text-gray-500/75 font-medium ";
   return (
     <>
-      <header class="bg-white border-b border-primary border-opacity-50">
+      <header class="bg-white border-b border-primary border-opacity-50 sticky top-0 z-40">
         <div class="mx-auto flex h-14 max-w-screen-2xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <a class="block text-primary" href="#">
             <span class="sr-only">Home</span>

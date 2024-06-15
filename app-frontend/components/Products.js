@@ -1,6 +1,12 @@
+import { CartContext } from "@/lib/cartContext";
 import Link from "next/link";
+import { useContext } from "react";
+import toast from "react-hot-toast";
 
 export default function Products({ products }) {
+  const {addProduct} = useContext(CartContext)
+
+
   return (
     <>
       <div className="mx-auto px-4 py-6">
@@ -39,6 +45,7 @@ export default function Products({ products }) {
 
                         <button
                           type="button"
+                          onClick={() => {addProduct(product._id); toast.success('Item added to cart!')}}
                           class="inline-flex items-center gap-1.5 rounded-lg border border-primary bg-white px-4 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-primary focus:ring focus:ring-green-100"
                         >
                           Add
