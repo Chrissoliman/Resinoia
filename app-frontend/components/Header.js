@@ -73,7 +73,7 @@ export default function Header() {
 
                 <Link
                   class="group rounded-md  text-sm font-medium flex  transition hover:text-green-600/75"
-                  href="#"
+                  href="/cart"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
