@@ -1,4 +1,5 @@
 import { CartContext } from "@/lib/cartContext";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -6,7 +7,9 @@ import { useContext } from "react";
 export default function Header() {
   const router = useRouter();
   const { pathname } = router;
-  const {cartProducts} = useContext(CartContext)
+  const { cartProducts } = useContext(CartContext);
+
+  const { data: session } = useSession();
 
   const active = "text-primary transition hover:text-secondary font-bold";
   const inactive =
@@ -64,12 +67,24 @@ export default function Header() {
 
             <div class="flex items-center gap-4">
               <div class="sm:flex sm:gap-4 items-center">
-                <Link
-                  class="block  px-5  text-sm font-medium transition border-r border-primary "
-                  href="#"
-                >
-                  Account
-                </Link>
+                {session ? (
+                  <div className="sm:flex sm:gap-2 border-r pr-4">
+                    <div className="h-9 w-9 ">
+                      <img
+                        src={session.user.image}
+                        alt={session.user.image}
+                        className="rounded-full h-full w-full object-cover object-center"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    class="block  px-5  text-sm font-medium transition border-r border-primary "
+                    href="#"
+                  >
+                    Account
+                  </Link>
+                )}
 
                 <Link
                   class="group rounded-md  text-sm font-medium flex  transition hover:text-green-600/75"
