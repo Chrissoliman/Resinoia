@@ -46,7 +46,7 @@ export default function Header() {
                 <li>
                   <Link
                     class={pathname == "/products" ? active : inactive}
-                    href="#"
+                    href="/products"
                   >
                     {" "}
                     Products{" "}
@@ -87,7 +87,7 @@ export default function Header() {
                 )}
 
                 <Link
-                  class="group rounded-md  text-sm font-medium flex  transition hover:text-green-600/75"
+                  class="group rounded-md  text-sm font-medium flex  transition text-text hover:text-green-600/75"
                   href="/cart"
                 >
                   <svg
