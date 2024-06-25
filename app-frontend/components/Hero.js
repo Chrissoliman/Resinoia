@@ -4,18 +4,48 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 
 export default function Hero({ product }) {
-  const {addProduct} = useContext(CartContext)
+  const { addProduct } = useContext(CartContext);
 
   function addItemToCart() {
-    addProduct(product._id)
-    toast.success('Item added to cart!')
+    addProduct(product._id);
+    toast.success("Item added to cart!");
   }
 
-  
   if (product) {
-    console.log(product)
+    console.log(product);
     return (
       <>
+        <section
+          style={{ backgroundImage: `url(./resin-hero.jpg)` }}
+          className=" relative md:min-h-screen bg-cover bg-center bg-no-repeat"
+        >
+          <div className="bg-black/45 flex items-center justify-center inset-0 absolute p-8 md:p-12 lg:px-16 lg:py-24">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-6xl">
+                Latest Resin Products
+              </h2>
+
+              <p className="hidden max-w-2xl mx-auto text-white/90 md:mt-6 md:block  md:text-lg md:leading-relaxed">
+                Where innovation meets craftsmanship. We specialize in
+                high-quality resin products, blending creativity with durability
+                to bring your visions to life. From custom art pieces to
+                functional home decor, our commitment to excellence ensures each
+                item is a unique masterpiece.
+              </p>
+
+              <div className="mt-4 sm:mt-8 ">
+                <Link
+                  href={"/products"}
+                  className="rounded-lg border border-primary bg-primary px-5 py-2.5 md:px-20 text-center text-md font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-300 hover:border-gray-300 "
+                >
+                  All Products
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        
         <div className="relative overflow-hidden my-14 md:my-10 ">
           <div className="lg:py-40 min-h-[650px]">
             <div className="relative mx-auto sm:static px-6 lg:px-8 ">
