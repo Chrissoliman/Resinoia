@@ -10,7 +10,9 @@ export default function Product({
   title: existingTitle,
   description: existingDescription,
   price: existingPrice,
-  images: existingImages
+  images: existingImages,
+  category: existingCategory,
+  heroProduct: existingHeroProduct
 }) {
   const [redirect, setRedirect] = useState(false);
 
@@ -18,6 +20,8 @@ export default function Product({
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
   const [images, setImages] = useState(existingImages || []);
+  const [category, setCategory] = useState(existingCategory || "");
+  const [heroProduct, setHeroProduct] = useState(existingHeroProduct || "");
   const [isuploading, setIsUploading] = useState(false);
 
   const uploadImagesQueue = [];
@@ -31,15 +35,14 @@ export default function Product({
       await Promise.all(uploadImagesQueue);
     }
 
-    console.log(images)
     const flatImages = images.flat();
-    const data = { title, description, price, images: flatImages };
-    if(_id) {
-      await axios.put("/api/products", {...data, _id})
-      toast.success('Product Updated!')
+    const data = { title, description, price, images: flatImages, category, heroProduct };
+    if (_id) {
+      await axios.put("/api/products", { ...data, _id });
+      toast.success("Product Updated!");
     } else {
       await axios.post("/api/products", data);
-      toast.success('Product Created!')
+      toast.success("Product Created!");
     }
 
     setRedirect(true);
@@ -119,10 +122,13 @@ export default function Product({
             <select
               id="example1"
               class="block w-full rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+              onChange={(event) => setCategory(event.target.value)}
+              value={category}
             >
               <option value="">No category selected</option>
-              <option value="">Option02</option>
-              <option value="">Option03</option>
+              <option value="coaster">Coaster</option>
+              <option value="letterKeyChain">Letter Key Chain</option>
+              <option value="clock">Wooden Clock</option>
             </select>
           </div>
         </div>
@@ -259,6 +265,48 @@ export default function Product({
               value={price}
               onChange={(event) => setPrice(event.target.value)}
             />
+          </div>
+        </div>
+
+        <div class="mx-auto my-4">
+          <div>
+            <label
+              for="example1"
+              class="mb-1 block text-lg font-medium text-gray-700 py-2"
+            >
+              Hero Section
+            </label>
+
+            <div class="mx-auto space-y-3">
+              <div class="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id="heroYes"
+                  name="radioGroup1"
+                  checked= {heroProduct == 'yes'}
+                  class="h-4 w-4 rounded-full border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400"
+                  onChange={(event) => setHeroProduct('yes')}
+                  value='yes'
+                />
+                <label for="heroYes" class="text-sm font-medium text-gray-700">
+                  Yes
+                </label>
+              </div>
+              <div class="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id="heroNo"
+                  checked= {heroProduct == 'no'}
+                  name="radioGroup2"
+                  class="h-4 w-4 rounded-full border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400"
+                  onChange={(event) => setHeroProduct('no')}
+                  value='no'
+                />
+                <label for="heroNo" class="text-sm font-medium text-gray-700">
+                  No
+                </label>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -17,8 +17,9 @@ export default function Cart() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState(session.user?.email || '');
+  const [name, setName] = useState(session.user?.name || '');
+  const [phone, setPhone] = useState("");
 
   const [isSuccess, setIsSuccess] = useState(false)
 
@@ -69,7 +70,7 @@ export default function Cart() {
 
   async function stripeCheckout() {
     const response = await axios.post('/api/checkout', {
-      email: session.user.email, name: session.user.name, address, zip, city, cartProducts
+      email: session.user.email, name: session.user.name, address, phone, zip, city, cartProducts
     });
 
     if (response.data.url) {
@@ -234,7 +235,7 @@ export default function Cart() {
                         id="example7"
                         class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                         placeholder="you@email.com"
-                        value={session.user.email}
+                        value={email}
                         onChange={(event) => setEmail(event.target.value)}
                       />
                     </div>
@@ -250,7 +251,7 @@ export default function Cart() {
                         id="example8"
                         class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
                         placeholder=""
-                        value={session.user.name}
+                        value={name}
                         onChange={(event) => setName(event.target.value)}
                       />
                     </div>
@@ -316,6 +317,22 @@ export default function Cart() {
                         placeholder=""
                         value={zip}
                         onChange={(event) => setZip(event.target.value)}
+                      />
+                    </div>
+                    <div class="col-span-3">
+                      <label
+                        for="example12"
+                        class="mb-1 block text-sm font-medium text-gray-700"
+                      >
+                        phone
+                      </label>
+                      <input
+                        type="text"
+                        id="example12"
+                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+                        placeholder=""
+                        value={phone}
+                        onChange={(event) => setPhone(event.target.value)}
                       />
                     </div>
                     <div class="col-span-12  text-center">

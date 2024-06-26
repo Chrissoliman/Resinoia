@@ -1,0 +1,23 @@
+order: 
+size
+letter
+notes
+
+product page:
+choose size to change price if coaster or table or clock
+choose letter
+Instagram button to dm
+
+create product:
+set price for every size
+hero section  ---------------------------------Done
+
+grid in admin page
+categories in admin
+orders in admin -------------------------------Done
+order show in admin ---------------------------Done
+phone number in checkout ----------------------Done
+change checkout to cash on delivery
+footer
+on mobile version menu
+account in main website
