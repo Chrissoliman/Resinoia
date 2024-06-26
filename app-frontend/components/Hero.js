@@ -16,7 +16,7 @@ export default function Hero({ product }) {
     return (
       <>
         <section
-          style={{ backgroundImage: `url(./resin-hero.jpg)` }}
+          style={{ backgroundImage: `url(./hero-image.jpeg)` }}
           className=" relative md:min-h-screen bg-cover bg-center bg-no-repeat"
         >
           <div className="bg-black/45 flex items-center justify-center inset-0 absolute p-8 md:p-12 lg:px-16 lg:py-24">
