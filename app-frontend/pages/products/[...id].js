@@ -64,10 +64,51 @@ export default function ProductPage({ product }) {
             </h2>
 
             <h3 className="text-primary my-4 font-bold md:text-2xl text-xl">
-              {product.price} EGP
+              {product.price[0]} EGP
             </h3>
 
             <p className="text-gray-900 my-4 max-w-lg">{product.description}</p>
+
+            {product.category == 'letterKeyChain' && (
+              <div>
+              <label htmlFor="HeadlineAct" className="block md:text-base text-sm font-bold text-gray-900"> Choose Letter </label>
+            
+              <select
+                name="HeadlineAct"
+                id="HeadlineAct"
+                className="mt-1.5 w-full rounded-lg border-2 border-black/10 text-gray-700 sm:text-sm"
+              >
+                <option value="">Please select</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+                <option value="e">E</option>
+                <option value="f">F</option>
+                <option value="g">G</option>
+                <option value="h">H</option>
+                <option value="i">I</option>
+                <option value="j">J</option>
+                <option value="k">K</option>
+                <option value="l">L</option>
+                <option value="m">M</option>
+                <option value="n">N</option>
+                <option value="o">O</option>
+                <option value="p">P</option>
+                <option value="q">Q</option>
+                <option value="r">R</option>
+                <option value="s">S</option>
+                <option value="t">T</option>
+                <option value="u">U</option>
+                <option value="v">V</option>
+                <option value="w">W</option>
+                <option value="x">X</option>
+                <option value="y">Y</option>
+                <option value="z">Z</option>
+
+              </select>
+            </div>
+            )}
 
             <div className="my-4 md:mt-12">
               <div className="flex justify-between rounded border border-gray-200">
