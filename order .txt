@@ -37,11 +37,12 @@ Size 40 cm for 750 le
 
 3. change product page:
 choose size to change price if clock
-choose letter
+choose letter ----------------------------------------------------------------------------------------------------Done
 add notes
 Instagram button to dm
 
 3. adding link to every product in website
+3. fix all prices in website
 
 4. change cart page
 
