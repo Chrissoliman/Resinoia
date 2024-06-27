@@ -18,11 +18,13 @@ export default function Product({
 
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
-  const [price, setPrice] = useState(existingPrice || []);
+  const [price, setPrice] = useState(existingPrice || Array(4).fill(''));
   const [images, setImages] = useState(existingImages || []);
   const [category, setCategory] = useState(existingCategory || "");
   const [heroProduct, setHeroProduct] = useState(existingHeroProduct || "");
   const [isuploading, setIsUploading] = useState(false);
+
+  console.log("Prices: ", price);
 
   const uploadImagesQueue = [];
 
@@ -95,6 +97,14 @@ export default function Product({
     setImages(updatedImages);
   }
 
+  const handlePriceChange = (index, value) => {
+    setPrice((oldPrice) => {
+      const newPrice = [...oldPrice];
+      newPrice[index] = value;
+      return newPrice;
+    });
+  };
+
   return (
     <>
       <form onSubmit={createProduct} className=" mx-auto max-w-screen-sm ">
@@ -109,7 +119,7 @@ export default function Product({
             <input
               type="text"
               id="example1"
-              class="block w-full rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+              class="block w-full rounded-md border-gray-300 shadow-sm border   p-3"
               placeholder="Enter product title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
@@ -128,7 +138,7 @@ export default function Product({
 
             <select
               id="example1"
-              class="block w-full rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+              class="block w-full rounded-md border-gray-300 shadow-sm border   p-3"
               onChange={(event) => setCategory(event.target.value)}
               value={category}
             >
@@ -150,11 +160,11 @@ export default function Product({
                   <input
                     type="text"
                     id="example1"
-                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border   p-3"
                     placeholder="price"
                     value={price[0]}
                     onChange={(event) =>
-                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                      handlePriceChange(0, event.target.value)
                     }
                   />
                 </div>
@@ -168,11 +178,11 @@ export default function Product({
                   <input
                     type="text"
                     id="example1"
-                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border   p-3"
                     placeholder="price"
                     value={price[1]}
                     onChange={(event) =>
-                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                      handlePriceChange(1, event.target.value)
                     }
                   />
                 </div>
@@ -186,11 +196,11 @@ export default function Product({
                   <input
                     type="text"
                     id="example1"
-                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border   p-3"
                     placeholder="price"
                     value={price[2]}
                     onChange={(event) =>
-                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                      handlePriceChange(2, event.target.value)
                     }
                   />
                 </div>
@@ -204,11 +214,11 @@ export default function Product({
                   <input
                     type="text"
                     id="example1"
-                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border   p-3"
                     placeholder="price"
                     value={price[3]}
                     onChange={(event) =>
-                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                      handlePriceChange(3, event.target.value)
                     }
                   />
                 </div>
@@ -325,7 +335,7 @@ export default function Product({
             </label>
             <textarea
               rows={5}
-              class="block w-full rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+              class="block w-full rounded-md border-gray-300 shadow-sm border   p-3"
               placeholder="Enter product description"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
@@ -345,10 +355,12 @@ export default function Product({
               <input
                 type="number"
                 id="example1"
-                class="block w-full rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                class="block w-full rounded-md border-gray-300 shadow-sm border   p-3"
                 placeholder="Enter product price"
                 value={price[0]}
-                onChange={(event) => setPrice(event.target.value)}
+                onChange={(event) =>
+                  handlePriceChange(0, event.target.value)
+                }
               />
             </div>
           </div>
