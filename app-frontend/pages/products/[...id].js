@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 export default function ProductPage({ product }) {
   const [mainImage, setMainImage] = useState(product.images[0]);
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState('');
 
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
@@ -69,45 +70,169 @@ export default function ProductPage({ product }) {
 
             <p className="text-gray-900 my-4 max-w-lg">{product.description}</p>
 
-            {product.category == 'letterKeyChain' && (
+            {product.category == "letterKeyChain" && (
               <div>
-              <label htmlFor="HeadlineAct" className="block md:text-base text-sm font-bold text-gray-900"> Choose Letter </label>
-            
-              <select
-                name="HeadlineAct"
-                id="HeadlineAct"
-                className="mt-1.5 w-full rounded-lg border-2 border-black/10 text-gray-700 sm:text-sm"
-              >
-                <option value="">Please select</option>
-                <option value="a">A</option>
-                <option value="b">B</option>
-                <option value="c">C</option>
-                <option value="d">D</option>
-                <option value="e">E</option>
-                <option value="f">F</option>
-                <option value="g">G</option>
-                <option value="h">H</option>
-                <option value="i">I</option>
-                <option value="j">J</option>
-                <option value="k">K</option>
-                <option value="l">L</option>
-                <option value="m">M</option>
-                <option value="n">N</option>
-                <option value="o">O</option>
-                <option value="p">P</option>
-                <option value="q">Q</option>
-                <option value="r">R</option>
-                <option value="s">S</option>
-                <option value="t">T</option>
-                <option value="u">U</option>
-                <option value="v">V</option>
-                <option value="w">W</option>
-                <option value="x">X</option>
-                <option value="y">Y</option>
-                <option value="z">Z</option>
+                <label
+                  htmlFor="HeadlineAct"
+                  className="block md:text-base text-sm font-bold text-gray-900"
+                >
+                  {" "}
+                  Choose Letter{" "}
+                </label>
 
-              </select>
-            </div>
+                <select
+                  name="HeadlineAct"
+                  id="HeadlineAct"
+                  className="mt-1.5 w-full rounded-lg border-2 border-black/10 text-gray-700 sm:text-sm"
+                >
+                  <option value="">Please select</option>
+                  <option value="a">A</option>
+                  <option value="b">B</option>
+                  <option value="c">C</option>
+                  <option value="d">D</option>
+                  <option value="e">E</option>
+                  <option value="f">F</option>
+                  <option value="g">G</option>
+                  <option value="h">H</option>
+                  <option value="i">I</option>
+                  <option value="j">J</option>
+                  <option value="k">K</option>
+                  <option value="l">L</option>
+                  <option value="m">M</option>
+                  <option value="n">N</option>
+                  <option value="o">O</option>
+                  <option value="p">P</option>
+                  <option value="q">Q</option>
+                  <option value="r">R</option>
+                  <option value="s">S</option>
+                  <option value="t">T</option>
+                  <option value="u">U</option>
+                  <option value="v">V</option>
+                  <option value="w">W</option>
+                  <option value="x">X</option>
+                  <option value="y">Y</option>
+                  <option value="z">Z</option>
+                </select>
+              </div>
+            )}
+
+            {product.category == "clock" && (
+              <>
+                <label
+                  htmlFor="HeadlineAct"
+                  className="block md:text-base my-4 text-sm font-bold text-gray-900"
+                >
+                  {" "}
+                  Select Size{" "}
+                </label>
+                <fieldset className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="25 Cm"
+                      className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+                    >
+                      <div>
+                        <p className="text-gray-700">25 Cm</p>
+
+                        <p className="mt-1 text-gray-900">
+                          {product.price[0]
+                            ? `${product.price[0]} EGP`
+                            : "Not Available"}
+                        </p>
+                      </div>
+
+                      <input
+                        type="radio"
+                        name="DeliveryOption"
+                        value='25 Cm'
+                        id="25 Cm"
+                        className="sr-only"
+                        checked={size == '25 Cm'}
+                        onChange={(event) => setSize('25 Cm')}
+                      />
+                    </label>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="30 Cm"
+                      className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+                    >
+                      <div>
+                        <p className="text-gray-700">30 Cm</p>
+
+                        <p className="mt-1 text-gray-900">
+                          {product.price[1]
+                            ? `${product.price[1]} EGP`
+                            : "Not Available"}
+                        </p>
+                      </div>
+
+                      <input
+                        type="radio"
+                        name="DeliveryOption"
+                        value='30 Cm'
+                        id='30 Cm'
+                        className="sr-only"
+                        checked={size == '30 Cm'}
+                        onChange={() => setSize('30 Cm')}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="35 Cm"
+                      className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+                    >
+                      <div>
+                        <p className="text-gray-700">35 Cm</p>
+
+                        <p className="mt-1 text-gray-900">
+                          {product.price[2]
+                            ? `${product.price[2]} EGP`
+                            : "Not Available"}
+                        </p>
+                      </div>
+
+                      <input
+                        type="radio"
+                        name="DeliveryOption"
+                        value='35 Cm'
+                        id='35 Cm'
+                        className="sr-only"
+                        checked={size == '35 Cm'}
+                        onChange={() => setSize('35 Cm')}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="40 Cm"
+                      className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+                    >
+                      <div>
+                        <p className="text-gray-700">40 Cm</p>
+
+                        <p className="mt-1 text-gray-900">
+                          {product.price[3]
+                            ? `${product.price[3]} EGP`
+                            : "Not Available"}
+                        </p>
+                      </div>
+
+                      <input
+                        type="radio"
+                        name="DeliveryOption"
+                        value='40 Cm'
+                        id='40 Cm'
+                        className="sr-only"
+                        checked={size == '40 Cm'}
+                        onChange={() => setSize('40 Cm')}
+                      />
+                    </label>
+                  </div>
+                </fieldset>
+              </>
             )}
 
             <div className="my-4 md:mt-12">
@@ -260,8 +385,6 @@ export default function ProductPage({ product }) {
                     fokak msh benraga3 7aga
                   </div>
                 </details>
-
-
               </div>
             </div>
           </div>
