@@ -147,6 +147,7 @@ export default function ProductPage({ product }) {
                         value='25 Cm'
                         id="25 Cm"
                         className="sr-only"
+                        disabled={product.price[0] == ''}
                         checked={size == '25 Cm'}
                         onChange={(event) => setSize('25 Cm')}
                       />
@@ -174,6 +175,7 @@ export default function ProductPage({ product }) {
                         value='30 Cm'
                         id='30 Cm'
                         className="sr-only"
+                        disabled={product.price[1] == ''}
                         checked={size == '30 Cm'}
                         onChange={() => setSize('30 Cm')}
                       />
@@ -200,6 +202,7 @@ export default function ProductPage({ product }) {
                         value='35 Cm'
                         id='35 Cm'
                         className="sr-only"
+                        disabled={product.price[2] == ''}
                         checked={size == '35 Cm'}
                         onChange={() => setSize('35 Cm')}
                       />
@@ -226,6 +229,7 @@ export default function ProductPage({ product }) {
                         value='40 Cm'
                         id='40 Cm'
                         className="sr-only"
+                        disabled={product.price[3] == ''}
                         checked={size == '40 Cm'}
                         onChange={() => setSize('40 Cm')}
                       />
