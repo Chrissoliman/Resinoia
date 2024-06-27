@@ -23,9 +23,15 @@ on mobile version menu
 account in main website
 
 
+Resin wooden clock:
+Size 25 cm for 500 le
+Size 30 cm for 575 le 
+Size 35 cm for 660 le
+Size 40 cm for 750 le
 
 
-1. Set price for every clock size  -> change product schema, change create product page
+
+1. Set price for every clock size  -> change product schema, change create product page  -------------------------DONE
 
 2. change order schema to accept letter and size and notes
 
