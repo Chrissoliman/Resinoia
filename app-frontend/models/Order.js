@@ -9,6 +9,9 @@ const OrderSchema = new Schema({
     state: String,
     address: String,
     phone: String,
+    letter: String,
+    size: String,
+    notes: String,
     paid: Boolean,
 }, { timestamps: true})
 
