@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   }
 
 
-  const { email, name, address, city, zip, phone, cartProducts } = req.body;
+  const { email, name, address, city, zip, phone, letter, size, notes, cartProducts } = req.body;
 
   console.log('req.body info: ', req.body)
 
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
           quantity,
           price_data: {
             currency: 'egp',
-            product_data: { name: productInfo.title, price: productInfo.price, images: productInfo.images[0] },
+            product_data: { name: productInfo.title, price: productInfo.price, images: productInfo.images[0], letter, size, notes },
             total_unit_amount: quantity * productInfo.price,
           },
 
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
   }
 
   const orderDoc = await Order.create({
-    line_items, email, name, address, city, zip, phone, paid: false
+    line_items, email, name, address, city, zip, phone, letter, size, notes, paid: false
   })
 
   console.log('orderDoc', orderDoc)
