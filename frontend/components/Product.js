@@ -12,13 +12,13 @@ export default function Product({
   price: existingPrice,
   images: existingImages,
   category: existingCategory,
-  heroProduct: existingHeroProduct
+  heroProduct: existingHeroProduct,
 }) {
   const [redirect, setRedirect] = useState(false);
 
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
-  const [price, setPrice] = useState(existingPrice || "");
+  const [price, setPrice] = useState(existingPrice || []);
   const [images, setImages] = useState(existingImages || []);
   const [category, setCategory] = useState(existingCategory || "");
   const [heroProduct, setHeroProduct] = useState(existingHeroProduct || "");
@@ -36,7 +36,14 @@ export default function Product({
     }
 
     const flatImages = images.flat();
-    const data = { title, description, price, images: flatImages, category, heroProduct };
+    const data = {
+      title,
+      description,
+      price,
+      images: flatImages,
+      category,
+      heroProduct,
+    };
     if (_id) {
       await axios.put("/api/products", { ...data, _id });
       toast.success("Product Updated!");
@@ -130,6 +137,83 @@ export default function Product({
               <option value="letterKeyChain">Letter Key Chain</option>
               <option value="clock">Wooden Clock</option>
             </select>
+
+            {category == "clock" && (
+              <div className="flex justify-between space-x-4 my-4">
+                <div className="flex-col">
+                  <label
+                    for="example1"
+                    class="mb-1 block text-lg font-medium text-gray-700 py-2"
+                  >
+                    25 Cm
+                  </label>
+                  <input
+                    type="text"
+                    id="example1"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    placeholder="price"
+                    value={price[0]}
+                    onChange={(event) =>
+                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                    }
+                  />
+                </div>
+                <div className="flex-col">
+                  <label
+                    for="example1"
+                    class="mb-1 block text-lg font-medium text-gray-700 py-2"
+                  >
+                    30 Cm
+                  </label>
+                  <input
+                    type="text"
+                    id="example1"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    placeholder="price"
+                    value={price[1]}
+                    onChange={(event) =>
+                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                    }
+                  />
+                </div>
+                <div className="flex-col">
+                  <label
+                    for="example1"
+                    class="mb-1 block text-lg font-medium text-gray-700 py-2"
+                  >
+                    35 Cm
+                  </label>
+                  <input
+                    type="text"
+                    id="example1"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    placeholder="price"
+                    value={price[2]}
+                    onChange={(event) =>
+                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                    }
+                  />
+                </div>
+                <div className="flex-col">
+                  <label
+                    for="example1"
+                    class="mb-1 block text-lg font-medium text-gray-700 py-2"
+                  >
+                    40 Cm
+                  </label>
+                  <input
+                    type="text"
+                    id="example1"
+                    class=" w-24 rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                    placeholder="price"
+                    value={price[3]}
+                    onChange={(event) =>
+                      setPrice((oldPrice) => [...oldPrice, event.target.value])
+                    }
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -249,24 +333,26 @@ export default function Product({
           </div>
         </div>
 
-        <div class="mx-auto my-4">
-          <div>
-            <label
-              for="example1"
-              class="mb-1 block text-lg font-medium text-gray-700 py-2"
-            >
-              Price
-            </label>
-            <input
-              type="number"
-              id="example1"
-              class="block w-full rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
-              placeholder="Enter product price"
-              value={price}
-              onChange={(event) => setPrice(event.target.value)}
-            />
+        {category !== "clock" && (
+          <div class="mx-auto my-4">
+            <div>
+              <label
+                for="example1"
+                class="mb-1 block text-lg font-medium text-gray-700 py-2"
+              >
+                Price
+              </label>
+              <input
+                type="number"
+                id="example1"
+                class="block w-full rounded-md border-gray-300 shadow-sm border focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 p-3"
+                placeholder="Enter product price"
+                value={price[0]}
+                onChange={(event) => setPrice(event.target.value)}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <div class="mx-auto my-4">
           <div>
@@ -283,10 +369,10 @@ export default function Product({
                   type="radio"
                   id="heroYes"
                   name="radioGroup1"
-                  checked= {heroProduct == 'yes'}
+                  checked={heroProduct == "yes"}
                   class="h-4 w-4 rounded-full border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400"
-                  onChange={(event) => setHeroProduct('yes')}
-                  value='yes'
+                  onChange={(event) => setHeroProduct("yes")}
+                  value="yes"
                 />
                 <label for="heroYes" class="text-sm font-medium text-gray-700">
                   Yes
@@ -296,11 +382,11 @@ export default function Product({
                 <input
                   type="radio"
                   id="heroNo"
-                  checked= {heroProduct == 'no'}
+                  checked={heroProduct == "no"}
                   name="radioGroup2"
                   class="h-4 w-4 rounded-full border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400"
-                  onChange={(event) => setHeroProduct('no')}
-                  value='no'
+                  onChange={(event) => setHeroProduct("no")}
+                  value="no"
                 />
                 <label for="heroNo" class="text-sm font-medium text-gray-700">
                   No
