@@ -7,6 +7,7 @@ export default function ProductPage({ product }) {
   const [mainImage, setMainImage] = useState(product.images[0]);
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState('');
+  const [letter, setLetter] = useState('');
 
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
@@ -19,7 +20,7 @@ export default function ProductPage({ product }) {
     let i = 0;
 
     while (i < quantity) {
-      addProduct(product._id);
+      addProduct(product._id, letter, size);
       i++;
     }
     toast.success("Items added to cart!");
@@ -83,6 +84,7 @@ export default function ProductPage({ product }) {
                 <select
                   name="HeadlineAct"
                   id="HeadlineAct"
+                  onChange={(event) => setLetter(event.target.value)}
                   className="mt-1.5 w-full rounded-lg border-2 border-black/10 text-gray-700 sm:text-sm"
                 >
                   <option value="">Please select</option>

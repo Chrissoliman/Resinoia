@@ -20,20 +20,41 @@ export default function CartContextProvider({children}) {
         }
     }, [])
 
-    function addProduct(productId) {
-        setCartProducts(prev => [...prev, productId])
+    function addProduct(productId, letter = '', size = '') {
+        // Check if product with the same ID and options exists
+        const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size);
+
+        if (existingProduct) {
+            // If exists, increase quantity
+            setCartProducts(prev => prev.map(item => {
+                if (item.productId === productId && item.letter === letter && item.size === size) {
+                    return { ...item, quantity: item.quantity + 1 };
+                }
+                return item;
+            }));
+        } else {
+            // If not exists, add new product with options
+            setCartProducts(prev => [...prev, { productId, quantity: 1, letter, size }]);
+        }
     }
 
-    function removeProduct(productId) {
-        setCartProducts(prev => {
-            const productIndex = prev.indexOf(productId)
+    function removeProduct(productId, letter = '', size = '') {
+                // Check if product with the same ID and options exists
+                const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size);
 
-            if(productIndex !== -1) {
-                return prev.filter((values, index) => index !== productIndex)
-            }
-            
-            return prev
-        })
+                if (existingProduct) {
+                    // If exists, decrease quantity
+                    setCartProducts(prev => prev.map(item => {
+                        if (item.productId === productId && item.letter === letter && item.size === size) {
+                            return { ...item, quantity: item.quantity - 1 };
+                        }
+                        return item;
+                    }));
+                } else {
+                    // If not exists, remove product with options
+                    setCartProducts(prev => prev.filter(item => !(item.productId === productId && item.letter === letter && item.size === size)));
+                }
+        
     }
 
     function clearCart() {

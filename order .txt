@@ -36,15 +36,16 @@ Size 40 cm for 750 le
 2. change order schema to accept letter and size and notes -------------------------------------------------------Done
 
 3. change product page:
-choose size to change price if clock
+choose size to change price if clock -----------------------------------------------------------------------------Done
 choose letter ----------------------------------------------------------------------------------------------------Done
+change price if size change
 add notes
 Instagram button to dm
 
 3. adding link to every product in website
 3. fix all prices in website
 
-4. change cart page
+4. change cart page -> fixing prices, adding letter or size chosen
 
 5. change checkout page
 

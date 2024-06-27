@@ -17,40 +17,40 @@ export default function Cart() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
-  const [email, setEmail] = useState(session.user?.email || '');
-  const [name, setName] = useState(session.user?.name || '');
+  const [email, setEmail] = useState(session.user?.email || "");
+  const [name, setName] = useState(session.user?.name || "");
   const [phone, setPhone] = useState("");
 
-  const [isSuccess, setIsSuccess] = useState(false)
-
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     if (cartProducts.length > 0) {
-      axios.post("/api/cart", { ids: cartProducts }).then((response) => {
-        setProducts(response.data);
-      });
+      axios
+        .post("/api/cart", { ids: cartProducts.map((item) => item.productId) })
+        .then((response) => {
+          setProducts(response.data);
+        });
     } else {
       setProducts([]);
     }
   }, [cartProducts]);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
-    if (window?.location.href.includes('success')) {
+    if (window?.location.href.includes("success")) {
       setIsSuccess(true);
       clearCart();
     }
   }, []);
 
-  function increaseProduct(id) {
-    addProduct(id);
+  function increaseProduct(productId, letter = "", size = "") {
+    addProduct(productId, letter, size);
   }
 
-  function decreaseProduct(id) {
-    removeProduct(id);
-    toast.success("Removed product!!");
+  function decreaseProduct(productId, letter = "", size = "") {
+    removeProduct(productId, letter, size);
   }
 
   function deleteCart(id) {
@@ -60,32 +60,37 @@ export default function Cart() {
 
   let total = 0;
 
-  for (const productId of cartProducts) {
-    const price = parseFloat(
-      products.find((product) => product._id === productId)?.price || 0
-    );
-
-    total += price;
+  for (const { productId, quantity, letter, size } of cartProducts) {
+    const product = products.find((p) => p._id === productId);
+    const price = product ? product.price : 0;
+    total += price * quantity;
   }
 
   async function stripeCheckout() {
-    const response = await axios.post('/api/checkout', {
-      email: session.user.email, name: session.user.name, address, phone, zip, city, cartProducts
+    const response = await axios.post("/api/checkout", {
+      email: session.user.email,
+      name: session.user.name,
+      address,
+      phone,
+      zip,
+      city,
+      cartProducts,
     });
 
     if (response.data.url) {
-      window.location = response.data.url
+      window.location = response.data.url;
     } else {
-      toast.error('An error occured!!')
+      toast.error("An error occured!!");
     }
   }
 
   if (isSuccess) {
-    return <>
-      <Success />
-    </>
+    return (
+      <>
+        <Success />
+      </>
+    );
   }
-
 
   if (session) {
     return (
@@ -103,68 +108,98 @@ export default function Cart() {
               ) : (
                 <>
                   {products?.length > 0 &&
-                    products.map((product) => (
-                      <div className="mt-8" key={product._id}>
-                        <ul className="space-y-4">
-                          <li className="flex items-center gap-4 justify-between">
-                            <img
-                              src={product.images[0]}
-                              alt="cart-image"
-                              className="h-16 w-16 object-cover"
-                            />
+                    products.map((product) => {
+                      const cartItem = cartProducts.find(
+                        (item) => item.productId === product._id
+                      );
+                      const { letter, size, quantity } = cartItem || {};
 
-                            <div>
-                              <h3 className="text-md text-text max-w-md">
-                                {product.title}
-                              </h3>
-                              <dl className="mt-1 space-y-px text-sm text-text">
-                                <p>
-                                  {cartProducts.filter(
-                                    (id) => id === product._id
-                                  ).length * product.price}{" "}
-                                  EGP
-                                </p>
-                              </dl>
-                            </div>
+                      console.log('cartItem: ', cartItem)
 
-                            <div>
-                              <label htmlFor="Quantity" className="sr-only">
-                                Quantity
-                              </label>
+                      return (
+                        <div className="mt-8" key={product._id}>
+                          <ul className="space-y-4">
+                            <li className="flex items-center gap-4 justify-between">
+                              <img
+                                src={product.images[0]}
+                                alt="cart-image"
+                                className="h-16 w-16 object-cover"
+                              />
 
-                              <div className="flex items-center gap-1">
-                                <button
-                                  type="button"
-                                  className="w-10 h-10 leading-10 text-text transition hover:opacity-75 border "
-                                  onClick={() => decreaseProduct(product._id)}
-                                >
-                                  -
-                                </button>
-
-                                <input
-                                  type="number"
-                                  id="Quantity"
-                                  value={
-                                    cartProducts.filter(
-                                      (id) => id === product._id
-                                    ).length
-                                  }
-                                  className="h-10 w-16 rounded border border-secondary text-primary font-bold text-center [-moz-appearance:_textfield] sm:text-md [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                                />
-
-                                <button
-                                  type="button"
-                                  className="w-10 h-10 leading-10 text-text transition hover:opacity-75 border"
-                                  onClick={() => increaseProduct(product._id)}
-                                >
-                                  +
-                                </button>
+                              <div>
+                                <h3 className="text-md text-text max-w-md">
+                                  {product.title}
+                                </h3>
+                                <dl className="mt-1 space-y-px text-sm text-text">
+                                  <p>{quantity * product.price[0]} EGP</p>
+                                </dl>
                               </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    ))}
+
+                              {product.category == "clock" && (
+                                <div>
+                                  <h3 className="text-md text-text max-w-md">
+                                    Size
+                                  </h3>
+                                  <dl className="mt-1 space-y-px text-sm text-text">
+                                    <p>
+                                      <p>{size}</p>
+                                    </p>
+                                  </dl>
+                                </div>
+                              )}
+
+                              {product.category == "letterKeyChain" && (
+                                <div>
+                                  <h3 className="text-md text-text max-w-md">
+                                    Letter
+                                  </h3>
+                                  <dl className="mt-1 space-y-px text-sm text-text">
+                                    <p>
+                                      <p>{letter}</p>
+                                    </p>
+                                  </dl>
+                                </div>
+                              )}
+
+                              <div>
+                                <label htmlFor="Quantity" className="sr-only">
+                                  Quantity
+                                </label>
+
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    type="button"
+                                    className="w-10 h-10 leading-10 text-text transition hover:opacity-75 border "
+                                    onClick={() =>
+                                      decreaseProduct(product._id, letter, size)
+                                    }
+                                  >
+                                    -
+                                  </button>
+
+                                  <input
+                                    type="number"
+                                    id="Quantity"
+                                    value={quantity}
+                                    className="h-10 w-16 rounded border border-secondary text-primary font-bold text-center [-moz-appearance:_textfield] sm:text-md [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                                  />
+
+                                  <button
+                                    type="button"
+                                    className="w-10 h-10 leading-10 text-text transition hover:opacity-75 border"
+                                    onClick={() =>
+                                      increaseProduct(product._id, letter, size)
+                                    }
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      );
+                    })}
                 </>
               )}
 
@@ -336,7 +371,10 @@ export default function Cart() {
                       />
                     </div>
                     <div class="col-span-12  text-center">
-                      <button onClick={stripeCheckout} className="block w-full rounded border border-green-600 bg-green-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-green-600 focus:outline-none focus:ring active:text-green-500">
+                      <button
+                        onClick={stripeCheckout}
+                        className="block w-full rounded border border-green-600 bg-green-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-green-600 focus:outline-none focus:ring active:text-green-500"
+                      >
                         Checkout
                       </button>
                     </div>
@@ -359,7 +397,7 @@ export default function Cart() {
           </p>
           <button
             className="inline-block rounded border border-primary bg-primary px-6 py-4 text-sm font-medium text-white hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary"
-            onClick={() => signIn('google')}
+            onClick={() => signIn("google")}
           >
             Continue with Google
           </button>
