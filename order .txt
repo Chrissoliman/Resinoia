@@ -33,12 +33,15 @@ Size 40 cm for 750 le
 
 1. Set price for every clock size  -> change product schema, change create product page  -------------------------DONE
 
-2. change order schema to accept letter and size and notes
+2. change order schema to accept letter and size and notes -------------------------------------------------------Done
 
 3. change product page:
 choose size to change price if clock
 choose letter
+add notes
 Instagram button to dm
+
+3. adding link to every product in website
 
 4. change cart page
 
