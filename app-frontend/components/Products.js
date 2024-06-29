@@ -4,8 +4,7 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 
 export default function Products({ products }) {
-  const {addProduct} = useContext(CartContext)
-
+  const { addProduct } = useContext(CartContext);
 
   return (
     <>
@@ -19,21 +18,23 @@ export default function Products({ products }) {
               <div className="group relative" key={product.id}>
                 <div className="group block overflow-hidden border border-gray-950 rounded-xl border-opacity-10">
                   <div className="">
-                    <div className="relative h-[300px] sm:h[300px]">
-                      <img
-                        src={product.images[0]}
-                        alt="new-img"
-                        className="absolute inset-0 h-full w-full object-contain opacity-100 group-hover:opacity-0"
-                      />
-                      <img
-                        src={product.images[1]}
-                        alt="new-img"
-                        className="absolute inset-0 h-full w-full object-contain opacity-0 group-hover:opacity-100"
-                      />
-                    </div>
+                    <Link href={"/products/" + product._id}>
+                      <div className="relative h-[300px] sm:h[300px]">
+                        <img
+                          src={product.images[0]}
+                          alt="new-img"
+                          className="absolute inset-0 h-full w-full object-contain opacity-100 group-hover:opacity-0"
+                        />
+                        <img
+                          src={product.images[1]}
+                          alt="new-img"
+                          className="absolute inset-0 h-full w-full object-contain opacity-0 group-hover:opacity-100"
+                        />
+                      </div>
+                    </Link>
 
                     <div className="relative p-3 border-t">
-                      <Link href={"/"}>
+                      <Link href={"/products/" + product._id}>
                         <h3 className="text-md text-gray-700 group-hover:underline group-hover:underline-offset-4 truncate">
                           {product.title}
                         </h3>
@@ -45,7 +46,10 @@ export default function Products({ products }) {
 
                         <button
                           type="button"
-                          onClick={() => {addProduct(product._id); toast.success('Item added to cart!')}}
+                          onClick={() => {
+                            addProduct(product._id);
+                            toast.success("Item added to cart!");
+                          }}
                           class="inline-flex items-center gap-1.5 rounded-lg border border-primary bg-white px-4 py-2.5 text-center text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-primary focus:ring focus:ring-green-100"
                         >
                           Add
