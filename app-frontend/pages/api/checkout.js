@@ -45,10 +45,6 @@ export default async function handler(req, res) {
     line_items, email, name, address, city, zip, phone, letter, size, notes, paid: false
   })
 
-  console.log('orderDoc', orderDoc)
-
-
-
   res.json({
     url: 'http://localhost:3000/',
   })

@@ -9,6 +9,7 @@ export default function ProductPage({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("25 Cm");
   const [letter, setLetter] = useState("");
+  const [notes, setNotes] = useState("");
 
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
@@ -21,7 +22,7 @@ export default function ProductPage({ product }) {
     let i = 0;
 
     while (i < quantity) {
-      addProduct(product._id, letter, size);
+      addProduct(product._id, letter, size, notes);
       i++;
     }
     toast.success("Items added to cart!");
@@ -95,7 +96,7 @@ export default function ProductPage({ product }) {
                   name="HeadlineAct"
                   id="HeadlineAct"
                   onChange={(event) => setLetter(event.target.value)}
-                  className="mt-1.5 w-full rounded-lg border-2 border-black/10 text-gray-700 sm:text-sm"
+                  className="mt-1.5 w-full rounded-lg border-2 border-black/10 text-gray-700 sm:text-sm hover:border-primary hover:shadow-primary"
                 >
                   <option value="">Please select</option>
                   <option value="a">A</option>
@@ -250,6 +251,24 @@ export default function ProductPage({ product }) {
                 </fieldset>
               </>
             )}
+
+            <div>
+            <label
+                  htmlFor="OrderNotes"
+                  className="block md:text-base my-4 text-sm font-bold text-gray-900"
+                >
+                  {" "}
+                  Order Notes{" "}
+                </label>
+
+              <textarea
+                id="OrderNotes"
+                className="mt-2 w-full rounded-lg border-gray-200 align-top shadow-sm sm:text-sm"
+                rows="4"
+                placeholder="Enter any additional order notes..."
+                onChange={(event) => setNotes(event.target.value)}
+              ></textarea>
+            </div>
 
             <div className="my-4 md:mt-12">
               <div className="flex justify-between rounded border border-gray-200">
