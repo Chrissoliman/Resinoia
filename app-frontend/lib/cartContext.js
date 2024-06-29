@@ -20,39 +20,39 @@ export default function CartContextProvider({children}) {
         }
     }, [])
 
-    function addProduct(productId, letter = '', size = '') {
+    function addProduct(productId, letter = '', size = '', notes = '') {
         // Check if product with the same ID and options exists
-        const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size);
+        const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size && item.notes === notes);
 
         if (existingProduct) {
             // If exists, increase quantity
             setCartProducts(prev => prev.map(item => {
-                if (item.productId === productId && item.letter === letter && item.size === size) {
+                if (item.productId === productId && item.letter === letter && item.size === size && item.notes === notes) {
                     return { ...item, quantity: item.quantity + 1 };
                 }
                 return item;
             }));
         } else {
             // If not exists, add new product with options
-            setCartProducts(prev => [...prev, { productId, quantity: 1, letter, size }]);
+            setCartProducts(prev => [...prev, { productId, quantity: 1, letter, size, notes }]);
         }
     }
 
     function removeProduct(productId, letter = '', size = '') {
                 // Check if product with the same ID and options exists
-                const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size);
+                const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size && item.notes === notes);
 
                 if (existingProduct) {
                     // If exists, decrease quantity
                     setCartProducts(prev => prev.map(item => {
-                        if (item.productId === productId && item.letter === letter && item.size === size) {
+                        if (item.productId === productId && item.letter === letter && item.size === size && item.notes === notes) {
                             return { ...item, quantity: item.quantity - 1 };
                         }
                         return item;
                     }));
                 } else {
                     // If not exists, remove product with options
-                    setCartProducts(prev => prev.filter(item => !(item.productId === productId && item.letter === letter && item.size === size)));
+                    setCartProducts(prev => prev.filter(item => !(item.productId === productId && item.letter === letter && item.size === size && item.notes === notes)));
                 }
         
     }
