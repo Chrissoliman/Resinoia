@@ -57,6 +57,10 @@ export default function Hero({ product }) {
                   {product.description}
                 </p>
 
+                <h2 className="text-2xl md:text-3xl max-md:mb-6 tracking-tight text-primary my-3">
+                  {product.price[0]} EGP
+                </h2>
+
                 <div className="flex gap-4 mt-10 items-center max-sm:justify-center max-sm:mt-6">
                   <button
                     onClick={addItemToCart}

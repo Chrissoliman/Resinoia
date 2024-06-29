@@ -30,7 +30,7 @@ export default function Collection({ product }) {
                         {product.description}
                       </p>
                       <p className="text-lg mt-1 mb-8 text-primary">
-                        {product.price} EGP
+                        {product.price[0]} EGP
                       </p>
                     </header>
 

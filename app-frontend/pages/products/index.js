@@ -102,7 +102,7 @@ export default function Products({ allProducts }) {
                             <span className="sr-only"> Regular Price </span>
 
                             <span className="tracking-wider text-gray-900">
-                              {product.price} EGP
+                              {product.price[0]} EGP
                             </span>
                           </p>
                         </div>
