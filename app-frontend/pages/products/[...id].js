@@ -1,13 +1,14 @@
 import { CartContext } from "@/lib/cartContext";
 import { Product } from "@/models/Product";
+import Link from "next/link";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function ProductPage({ product }) {
   const [mainImage, setMainImage] = useState(product.images[0]);
   const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState('');
-  const [letter, setLetter] = useState('');
+  const [size, setSize] = useState("25 Cm");
+  const [letter, setLetter] = useState("");
 
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
@@ -66,7 +67,16 @@ export default function ProductPage({ product }) {
             </h2>
 
             <h3 className="text-primary my-4 font-bold md:text-2xl text-xl">
-              {product.price[0]} EGP
+              {size == "25 Cm"
+                ? product.price[0]
+                : size == "30 Cm"
+                ? product.price[1]
+                : size == "35 Cm"
+                ? product.price[2]
+                : size == "40 Cm"
+                ? product.price[3]
+                : "Price is not available"}{" "}
+              EGP
             </h3>
 
             <p className="text-gray-900 my-4 max-w-lg">{product.description}</p>
@@ -146,12 +156,12 @@ export default function ProductPage({ product }) {
                       <input
                         type="radio"
                         name="DeliveryOption"
-                        value='25 Cm'
+                        value="25 Cm"
                         id="25 Cm"
                         className="sr-only"
-                        disabled={product.price[0] == ''}
-                        checked={size == '25 Cm'}
-                        onChange={(event) => setSize('25 Cm')}
+                        disabled={product.price[0] == ""}
+                        checked={size == "25 Cm"}
+                        onChange={(event) => setSize("25 Cm")}
                       />
                     </label>
                   </div>
@@ -174,12 +184,12 @@ export default function ProductPage({ product }) {
                       <input
                         type="radio"
                         name="DeliveryOption"
-                        value='30 Cm'
-                        id='30 Cm'
+                        value="30 Cm"
+                        id="30 Cm"
                         className="sr-only"
-                        disabled={product.price[1] == ''}
-                        checked={size == '30 Cm'}
-                        onChange={() => setSize('30 Cm')}
+                        disabled={product.price[1] == ""}
+                        checked={size == "30 Cm"}
+                        onChange={() => setSize("30 Cm")}
                       />
                     </label>
                   </div>
@@ -201,12 +211,12 @@ export default function ProductPage({ product }) {
                       <input
                         type="radio"
                         name="DeliveryOption"
-                        value='35 Cm'
-                        id='35 Cm'
+                        value="35 Cm"
+                        id="35 Cm"
                         className="sr-only"
-                        disabled={product.price[2] == ''}
-                        checked={size == '35 Cm'}
-                        onChange={() => setSize('35 Cm')}
+                        disabled={product.price[2] == ""}
+                        checked={size == "35 Cm"}
+                        onChange={() => setSize("35 Cm")}
                       />
                     </label>
                   </div>
@@ -228,12 +238,12 @@ export default function ProductPage({ product }) {
                       <input
                         type="radio"
                         name="DeliveryOption"
-                        value='40 Cm'
-                        id='40 Cm'
+                        value="40 Cm"
+                        id="40 Cm"
                         className="sr-only"
-                        disabled={product.price[3] == ''}
-                        checked={size == '40 Cm'}
-                        onChange={() => setSize('40 Cm')}
+                        disabled={product.price[3] == ""}
+                        checked={size == "40 Cm"}
+                        onChange={() => setSize("40 Cm")}
                       />
                     </label>
                   </div>
@@ -274,6 +284,15 @@ export default function ProductPage({ product }) {
             >
               Add to cart
             </button>
+
+            <Link
+              className="group inline-block w-full text-center tracking-widest my-4 mt-8 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
+              href="https://www.instagram.com/resinoia.eg/"
+            >
+              <span className="block rounded-full md:text-md  bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent">
+                To customize DM us on Instagram
+              </span>
+            </Link>
 
             <div class="mx-auto max-w-lg my-8">
               <div class="divide-y divide-gray-100">
