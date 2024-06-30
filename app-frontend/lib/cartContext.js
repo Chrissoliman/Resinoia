@@ -20,25 +20,60 @@ export default function CartContextProvider({children}) {
         }
     }, [])
 
+    // function addProduct(productId, letter = '', size = '', notes = '') {
+    //     // Check if product with the same ID and options exists
+    //     const existingProduct = cartProducts.find(item => item.productId == productId && item.letter == letter && item.size == size && item.notes == notes);
+    //     console.log("Add Product Called with:", { productId, letter, size, notes });
+    //     console.log("Current cart products:", cartProducts);
+    //     console.log("Existing product:" , existingProduct)
+
+    //     if (existingProduct) {
+    //         // If exists, increase quantity
+    //         setCartProducts(prev => prev.map(item => {
+    //             if (item.productId == productId && item.letter == letter && item.size == size && item.notes == notes) {
+    //                 return { ...item, quantity: item.quantity + 1 };
+    //             }
+    //             return item;
+    //         }));
+    //     } else {
+    //         // If not exists, add new product with options
+    //         setCartProducts(prev => [...prev, { productId, quantity: 1, letter, size, notes }]);
+    //     }
+    // }
     function addProduct(productId, letter = '', size = '', notes = '') {
-        // Check if product with the same ID and options exists
-        const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size && item.notes === notes);
-
+        console.log("Add Product Called with:", { productId, letter, size, notes });
+        console.log("Current cart products before update:", cartProducts);
+    
+        const existingProduct = cartProducts.find(item => 
+          item.productId == productId && 
+          item.letter == letter && 
+          item.size == size && 
+          item.notes == notes
+        );
+    
+        console.log("Existing product:", existingProduct);
+    
         if (existingProduct) {
-            // If exists, increase quantity
-            setCartProducts(prev => prev.map(item => {
-                if (item.productId === productId && item.letter === letter && item.size === size && item.notes === notes) {
-                    return { ...item, quantity: item.quantity + 1 };
-                }
-                return item;
-            }));
+          setCartProducts(prev => {
+            const updatedCartProducts = prev.map(item => {
+              if (item.productId === productId && item.letter === letter && item.size === size && item.notes === notes) {
+                return { ...item, quantity: item.quantity + 1 };
+              }
+              return item;
+            });
+            console.log("Updated cart products:", updatedCartProducts);
+            return updatedCartProducts;
+          });
         } else {
-            // If not exists, add new product with options
-            setCartProducts(prev => [...prev, { productId, quantity: 1, letter, size, notes }]);
+          setCartProducts(prev => {
+            const newCartProducts = [...prev, { productId, quantity: 1, letter, size, notes }];
+            console.log("New cart products:", newCartProducts);
+            return newCartProducts;
+          });
         }
-    }
+      }
 
-    function removeProduct(productId, letter = '', size = '') {
+    function removeProduct(productId, letter = '', size = '', notes = '') {
                 // Check if product with the same ID and options exists
                 const existingProduct = cartProducts.find(item => item.productId === productId && item.letter === letter && item.size === size && item.notes === notes);
 

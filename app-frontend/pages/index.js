@@ -1,4 +1,5 @@
 import Collection from "@/components/Collection";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
 import mongooseConnect from "@/lib/mongoose";
@@ -97,6 +98,8 @@ export default function Home({featureProduct, newProducts, collectionProduct}) {
       <hr class="my-8 h-px border-0 bg-gray-300" />
 
       <Collection product={collectionProduct} />
+
+      <Footer />
     </>
   );
 }

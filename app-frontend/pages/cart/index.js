@@ -22,7 +22,6 @@ export default function Cart() {
   const [phone, setPhone] = useState("");
 
   const [isSuccess, setIsSuccess] = useState(false);
-
   useEffect(() => {
     if (cartProducts.length > 0) {
       axios
@@ -45,12 +44,12 @@ export default function Cart() {
     }
   }, []);
 
-  function increaseProduct(productId, letter = "", size = "") {
-    addProduct(productId, letter, size);
+  function increaseProduct(productId, letter = "", size = "", notes = "") {
+    addProduct(productId, letter, size, notes);
   }
 
-  function decreaseProduct(productId, letter = "", size = "") {
-    removeProduct(productId, letter, size);
+  function decreaseProduct(productId, letter = "", size = "", notes = "") {
+    removeProduct(productId, letter, size, notes);
   }
 
   function deleteCart(id) {
@@ -92,6 +91,9 @@ export default function Cart() {
     );
   }
 
+  console.log("Cart info: ", cartProducts);
+  console.log("products info: ", products);
+
   if (session) {
     return (
       <>
@@ -108,34 +110,37 @@ export default function Cart() {
               ) : (
                 <>
                   {products?.length > 0 &&
-                    products.map((product) => {
-                      const cartItem = cartProducts.find(
-                        (item) => item.productId === product._id
+                    cartProducts.map((product) => {
+                      const cartItem = products.find(
+                        (item) => item._id === product.productId
                       );
-                      const { letter, size, quantity } = cartItem || {};
+                      const { letter, size, quantity, notes } = product || {};
 
-                      console.log('cartItem: ', cartItem)
+                      console.log('specs: ', product)
 
                       return (
-                        <div className="mt-8" key={product._id}>
+                        <div
+                          className="mt-8"
+                          key={`${product.productId}-${letter}-${size}-${notes}`}
+                        >
                           <ul className="space-y-4">
                             <li className="flex items-center gap-4 justify-between">
                               <img
-                                src={product.images[0]}
+                                src={cartItem.images[0]}
                                 alt="cart-image"
                                 className="h-16 w-16 object-cover"
                               />
 
                               <div>
                                 <h3 className="text-md text-text max-w-md">
-                                  {product.title}
+                                  {cartItem.title}
                                 </h3>
                                 <dl className="mt-1 space-y-px text-sm text-text">
-                                  <p>{quantity * product.price[0]} EGP</p>
+                                  <p>{quantity * cartItem.price[0]} EGP</p>
                                 </dl>
                               </div>
 
-                              {product.category == "clock" && (
+                              {cartItem.category == "clock" && (
                                 <div>
                                   <h3 className="text-md text-text max-w-md">
                                     Size
@@ -148,7 +153,7 @@ export default function Cart() {
                                 </div>
                               )}
 
-                              {product.category == "letterKeyChain" && (
+                              {cartItem.category == "letterKeyChain" && (
                                 <div>
                                   <h3 className="text-md text-text max-w-md">
                                     Letter
@@ -171,7 +176,12 @@ export default function Cart() {
                                     type="button"
                                     className="w-10 h-10 leading-10 text-text transition hover:opacity-75 border "
                                     onClick={() =>
-                                      decreaseProduct(product._id, letter, size)
+                                      decreaseProduct(
+                                        cartItem._id,
+                                        letter,
+                                        size,
+                                        notes
+                                      )
                                     }
                                   >
                                     -
@@ -188,7 +198,12 @@ export default function Cart() {
                                     type="button"
                                     className="w-10 h-10 leading-10 text-text transition hover:opacity-75 border"
                                     onClick={() =>
-                                      increaseProduct(product._id, letter, size)
+                                      increaseProduct(
+                                        cartItem._id,
+                                        letter,
+                                        size,
+                                        notes
+                                      )
                                     }
                                   >
                                     +
