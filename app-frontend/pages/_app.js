@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 
 import { Poppins } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/Footer";
 
 const inter = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -14,7 +15,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
       <SessionProvider session={session}>
         <CartContextProvider>
           <main
-            className={`${inter.className} min-h-screen max-w-screen-2xl mx-auto p-4 bg-background`}
+            className={`${inter.className} min-h-screen max-w-screen-2xl bg-background`}
           >
             <Header />
             <Component {...pageProps} />

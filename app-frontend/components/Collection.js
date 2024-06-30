@@ -5,7 +5,7 @@ export default function Collection({ product }) {
     return (
       <>
         <section>
-          <div className="px-4 py-8 mx-auto sm:py-12 lg:px-8 ">
+          <div className="px-8 py-12 mx-auto sm:py-12 lg:px-8 ">
             <header className="text-center">
               <h2 className="tracking-tight text-xl sm:text-3xl font-bold  text-text">
                 New Collection

@@ -8,7 +8,7 @@ export default function Products({ products }) {
 
   return (
     <>
-      <div className="mx-auto px-4 py-6">
+      <div className="mx-auto px-8 py-10">
         <h2 className=" tracking-tight text-2xl text-center font-bold text-text">
           Our Latest Products
         </h2>

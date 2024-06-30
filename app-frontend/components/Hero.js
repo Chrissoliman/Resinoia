@@ -46,7 +46,7 @@ export default function Hero({ product }) {
         </section>
 
         
-        <div className="relative overflow-hidden my-14 md:my-10 ">
+        <div className="relative overflow-hidden mx-auto p-4 my-14 md:my-10 ">
           <div className="lg:py-40 min-h-[650px]">
             <div className="relative mx-auto sm:static px-6 lg:px-8 ">
               <div className="max-w-xl text-start">
