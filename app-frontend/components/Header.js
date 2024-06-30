@@ -56,7 +56,7 @@ export default function Header() {
                 <li>
                   <Link
                     class={pathname == "/contact" ? active : inactive}
-                    href="#"
+                    href="/about"
                   >
                     {" "}
                     About - Contact{" "}
