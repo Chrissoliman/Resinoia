@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Link from "next/link";
 
 export default function About() {
@@ -155,6 +156,7 @@ export default function About() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
