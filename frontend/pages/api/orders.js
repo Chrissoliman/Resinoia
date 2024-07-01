@@ -17,6 +17,16 @@ export default async function handle(req, res) {
         }
     }
 
+    if( method == 'PUT') {
+        const { line_items, name, email, city, zip, state, address, phone, _id } = req.body
+        let { status } = req.body
+
+        status = !status
+
+        await Order.updateOne({_id}, { line_items, name, email, city, zip, state, address, phone, status})
+        res.json(true)
+    }
+
 
     if( method == 'DELETE' ) {
         if(req.query.id) {
