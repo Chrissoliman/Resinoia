@@ -1,5 +1,4 @@
 import Collection from "@/components/Collection";
-import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
 import mongooseConnect from "@/lib/mongoose";
@@ -107,8 +106,11 @@ export default function Home({featureProduct, newProducts, collectionProduct}) {
 export async function getServerSideProps() {
   await mongooseConnect();
 
-  const featureId = "6669c3c6363f7b9b3a09b571";
-  const collectionId = "6669c3c6363f7b9b3a09b571";
+  const featureId = "6681918c01f4fec0c35da695";
+  const collectionId = "668191c601f4fec0c35da69d";
+
+  // const featureId = "6669c3c6363f7b9b3a09b571";
+  // const collectionId = "6669c3c6363f7b9b3a09b571";
 
   const featureProduct = await Product.findById(featureId);
   const collectionProduct = await Product.findById(collectionId);

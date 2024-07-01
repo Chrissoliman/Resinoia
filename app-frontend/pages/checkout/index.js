@@ -78,11 +78,11 @@ export default function Checkout() {
               <div className="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
                 <div className="space-y-4">
                   {products?.length > 0 &&
-                    cartProducts.map((cartItem, index) => {
-                        const product = products.find(
-                          (p) => p._id === cartItem.productId
-                        );
-                        const { letter, size, quantity, notes } = cartItem;
+                    products.map((product) => {
+                      const cartItem = cartProducts.find(
+                        (item) => item.productId === product._id
+                      );
+                      const { letter, size, quantity } = cartItem || {};
                       return (
                         <div
                           className="flex items-start gap-4"
