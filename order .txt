@@ -64,5 +64,8 @@ Instagram button to dm----------------------------------------------------------
 10. account on both websites
 
 shipping
+total price
 clear cart after order
+remove add button from product page
 remove sort by from products page
+header logo

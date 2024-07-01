@@ -1,4 +1,5 @@
 import Collection from "@/components/Collection";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
 import mongooseConnect from "@/lib/mongoose";
