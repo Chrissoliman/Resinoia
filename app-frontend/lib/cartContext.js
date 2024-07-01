@@ -1,4 +1,4 @@
-const { createContext, Children, useState, useEffect } = require("react");
+const { createContext, Children, useState, useEffect, useCallback } = require("react");
 
 export const CartContext = createContext({})
 
@@ -40,38 +40,36 @@ export default function CartContextProvider({children}) {
     //         setCartProducts(prev => [...prev, { productId, quantity: 1, letter, size, notes }]);
     //     }
     // }
-    function addProduct(productId, letter = '', size = '', notes = '') {
+    const addProduct = useCallback((productId, letter = '', size = '', notes = '' , quantity = 1) => {
         console.log("Add Product Called with:", { productId, letter, size, notes });
-        console.log("Current cart products before update:", cartProducts);
     
-        const existingProduct = cartProducts.find(item => 
-          item.productId == productId && 
-          item.letter == letter && 
-          item.size == size && 
-          item.notes == notes
-        );
-    
-        console.log("Existing product:", existingProduct);
-    
-        if (existingProduct) {
-          setCartProducts(prev => {
+        setCartProducts(prev => {
+        console.log("Current cart products before update:", prev);
+          const existingProduct = prev.find(item => 
+            item.productId == productId && 
+            item.letter == letter && 
+            item.size == size && 
+            item.notes == notes
+          );
+          if (existingProduct) {
             const updatedCartProducts = prev.map(item => {
               if (item.productId === productId && item.letter === letter && item.size === size && item.notes === notes) {
-                return { ...item, quantity: item.quantity + 1 };
+                return { ...item, quantity: item.quantity + quantity };
               }
               return item;
             });
             console.log("Updated cart products:", updatedCartProducts);
             return updatedCartProducts;
-          });
-        } else {
-          setCartProducts(prev => {
-            const newCartProducts = [...prev, { productId, quantity: 1, letter, size, notes }];
+          }
+          else {
+            const newCartProducts = [...prev, { productId, quantity, letter, size, notes }];
             console.log("New cart products:", newCartProducts);
             return newCartProducts;
-          });
-        }
-      }
+          }
+        console.log("Existing product:", existingProduct);
+        })
+
+      }, [setCartProducts])
 
     function removeProduct(productId, letter = '', size = '', notes = '') {
                 // Check if product with the same ID and options exists

@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import { CartContext } from "@/lib/cartContext";
 import { Product } from "@/models/Product";
 import Link from "next/link";
@@ -20,9 +19,8 @@ export default function ProductPage({ product }) {
   }
 
   function addToCart() {
-    for (let i = 0; i < quantity; i++) {
-      addProduct(product._id, letter, size, notes);
-    }
+      addProduct(product._id, letter, size, notes, quantity);
+    
     toast.success("Items added to cart!");
   }
 
@@ -432,7 +430,6 @@ export default function ProductPage({ product }) {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
