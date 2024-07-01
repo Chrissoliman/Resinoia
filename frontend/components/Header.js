@@ -14,7 +14,7 @@ export default function Header() {
   if (session) {
     return (
       <>
-        <header class="bg-white sticky top-0">
+        <header class="bg-white sticky top-0 z-40">
           <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
               <div class="flex-1 md:flex md:items-center md:gap-12">

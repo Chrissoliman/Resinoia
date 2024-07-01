@@ -11,7 +11,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   return (
-    <main className={`p-4 ${inter.className}`}>
+    <main className={` ${inter.className}`}>
       <SessionProvider session={session}>
         <Header />
         <Component {...pageProps} />
