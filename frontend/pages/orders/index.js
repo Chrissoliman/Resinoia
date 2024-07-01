@@ -1,10 +1,13 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     axios.get("/api/orders").then((res) => {
@@ -12,6 +15,12 @@ export default function Orders() {
       setLoading(false);
     });
   }, []);
+
+  async function doneOrder(data, _id) {
+    await axios.put("/api/orders", { ...data, _id });
+    toast.success("Order Updated!");
+    router.reload();
+  }
 
   return (
     <>
@@ -82,21 +91,41 @@ export default function Orders() {
                     <td class="px-6 py-4">{order.phone}</td>
                     <td class="px-6 py-4">
                       {" "}
-                      <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          class="h-3 w-3"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                        Done
-                      </span>
+                      {order.status ? (
+                        <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="h-3 w-3"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                          Done
+                        </span>
+                      ) : (
+                        <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-3 w-3"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M6 18 18 6M6 6l12 12"
+                            />
+                          </svg>
+                          Not Done
+                        </span>
+                      )}
                     </td>
                     <td class="flex justify-end gap-4 px-6 py-4 font-medium">
                       <Link
@@ -105,12 +134,12 @@ export default function Orders() {
                       >
                         View
                       </Link>
-                      <Link
-                        href={"/orders/delete/" + order._id}
+                      <button
+                        onClick={(event) => doneOrder(order, order._id)}
                         className="text-green-700"
                       >
-                        Done
-                      </Link>
+                        {order.status ? "Undone" : "Done"}
+                      </button>
                     </td>
                   </tr>
                 </tbody>
