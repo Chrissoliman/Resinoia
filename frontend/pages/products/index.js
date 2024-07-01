@@ -3,15 +3,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Products() {
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/products').then(res => {
-      setProducts(res.data)
-      setLoading(false)
-    })
-  }, [])
+    axios.get("/api/products").then((res) => {
+      setProducts(res.data);
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <>
@@ -54,40 +54,77 @@ export default function Products() {
       <hr class="my-1 h-px border-0 bg-gray-300" />
 
       <div className=" mx-auto max-w-screen-2xl py-6 px-4 sm:px-6 sm:py-12 lg:px-8 ">
-        {products.length === 0 ? 
-      (<p>No Products Found</p>) : 
-      (
-        <div class="">
-          <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
-            <thead class="bg-gray-50">
-              <tr>
-                <th scope="col" class="px-6 py-4 font-medium text-gray-900">Product</th>
-                <th scope="col" class="px-6 py-4 font-medium text-gray-900">Name</th>
-                <th scope="col" class="px-6 py-4 font-medium text-gray-900">Description</th>
-                <th scope="col" class="px-6 py-4 font-medium text-gray-900">Price</th>
-                <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
-              </tr>
-            </thead>
-            {products.map((product, index) => (
-                          <tbody class="divide-y divide-gray-100 border-t border-gray-100" key={product._id}>
-                          <tr>
-                            <th class="px-6 py-4 font-medium text-gray-900">{index + 1}</th>
-                            <td class="px-6 py-4">{product.title}</td>
-                            <td class="px-6 py-4 truncate max-w-sm ">{product.description}</td>
-                            <td class="px-6 py-4">
-                              {product.price}
-                            </td>
-                            <td class="flex justify-end gap-4 px-6 py-4 font-medium">
-                              <Link href={'/products/delete/' + product._id} className="text-red-700">Delete</Link>
-                              <Link href={'/products/edit/' + product._id}  class="text-green-700">Edit</Link></td>
-                          </tr>
-                        </tbody>
-            ))}
-
-          </table>
-        </div>
-        )
-      }
+        {products.length === 0 ? (
+          <p>No Products Found</p>
+        ) : (
+          <div class="">
+            <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Product
+                  </th>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Name
+                  </th>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Description
+                  </th>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Category
+                  </th>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Price
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-4 font-medium text-gray-900"
+                  ></th>
+                </tr>
+              </thead>
+              {products.map((product, index) => (
+                <tbody
+                  class="divide-y divide-gray-100 border-t border-gray-100"
+                  key={product._id}
+                >
+                  <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900">
+                      {index + 1}
+                    </th>
+                    <td class="px-6 py-4">{product.title}</td>
+                    <td class="px-6 py-4 truncate max-w-sm ">
+                      {product.description}
+                    </td>
+                    <td class="px-6 py-4 truncate max-w-sm ">
+                      {product.category == "coaster"
+                        ? "Coaster"
+                        : product.category == "clock"
+                        ? "Wooden Clock"
+                        : product.category == "letterKeyChain"
+                        ? "Letter Key Chain"
+                        : ""}
+                    </td>
+                    <td class="px-6 py-4">{product.price[0]}</td>
+                    <td class="flex justify-end gap-4 px-6 py-4 font-medium">
+                      <Link
+                        href={"/products/delete/" + product._id}
+                        className="text-red-700"
+                      >
+                        Delete
+                      </Link>
+                      <Link
+                        href={"/products/edit/" + product._id}
+                        class="text-green-700"
+                      >
+                        Edit
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              ))}
+            </table>
+          </div>
+        )}
       </div>
     </>
   );
