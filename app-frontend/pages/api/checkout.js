@@ -78,7 +78,7 @@ export default async function handler(req, res) {
     city,
     zip,
     phone,
-    paid: false,
+    status: false,
   });
 
   res.json({
