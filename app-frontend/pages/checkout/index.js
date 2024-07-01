@@ -37,8 +37,22 @@ export default function Checkout() {
 
   for (const { productId, quantity, letter, size } of cartProducts) {
     const product = products.find((p) => p._id === productId);
-    const price = product ? product.price : 0;
-    total += price * quantity;
+    let price = 0;
+    if (product?.category == "clock") {
+      price =
+        size == "25 Cm"
+          ? product.price[0]
+          : size == "30 Cm"
+          ? product.price[1]
+          : size == "35 Cm"
+          ? product.price[2]
+          : size == "40 Cm"
+          ? product.price[3]
+          : product.price[0];
+    } else {
+      price = product ? product.price[0] : 0;
+    }
+    total = total + price * quantity;
   }
 
   async function stripeCheckout() {
@@ -53,7 +67,7 @@ export default function Checkout() {
     });
 
     if (response.data.url) {
-      setIsSuccess(true)
+      setIsSuccess(true);
     } else {
       toast.error("An error occurred!!");
     }
@@ -67,8 +81,6 @@ export default function Checkout() {
     );
   }
 
-  console.log("products", total);
-
   return (
     <>
       <div className="font-[sans-serif] bg-white">
@@ -78,11 +90,12 @@ export default function Checkout() {
               <div className="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
                 <div className="space-y-4">
                   {products?.length > 0 &&
-                    products.map((product) => {
-                      const cartItem = cartProducts.find(
-                        (item) => item.productId === product._id
+                    cartProducts.map((product) => {
+                      const cartItem = products.find(
+                        (item) => item._id === product.productId
                       );
-                      const { letter, size, quantity } = cartItem || {};
+                      const { letter, size, quantity } = product || {};
+
                       return (
                         <div
                           className="flex items-start gap-4"
@@ -90,21 +103,21 @@ export default function Checkout() {
                         >
                           <div className="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-primary/100 shadow-md shadow-gray-700 rounded-md">
                             <img
-                              src={product.images[0]}
+                              src={cartItem.images[0]}
                               className="w-full object-contain"
                             />
                           </div>
                           <div className="w-full">
                             <h3 className="text-base text-text">
-                              {product.title}
+                              {cartItem.title}
                             </h3>
                             <ul className="text-xs text-gray-800 space-y-2 mt-2">
-                              {product.category == "clock" && (
+                              {cartItem.category == "clock" && (
                                 <li className="flex flex-wrap gap-4">
                                   Size <span className="ml-auto">{size}</span>
                                 </li>
                               )}
-                              {product.category == "letterKeyChain" && (
+                              {cartItem.category == "letterKeyChain" && (
                                 <li className="flex flex-wrap gap-4">
                                   Letter{" "}
                                   <span className="ml-auto">{letter}</span>
@@ -117,7 +130,16 @@ export default function Checkout() {
                               <li className="flex flex-wrap gap-4">
                                 Total Price{" "}
                                 <span className="ml-auto">
-                                  {quantity * product.price[0]} EGP
+                                  {size == "25 Cm"
+                                    ? cartItem.price[0] * quantity
+                                    : size == "30 Cm"
+                                    ? cartItem.price[1] * quantity
+                                    : size == "35 Cm"
+                                    ? cartItem.price[2] * quantity
+                                    : size == "40 Cm"
+                                    ? cartItem.price[3] * quantity
+                                    : cartItem.price[0] * quantity}{" "}
+                                  EGP
                                 </span>
                               </li>
                             </ul>

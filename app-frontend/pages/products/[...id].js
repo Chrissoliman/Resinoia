@@ -19,8 +19,8 @@ export default function ProductPage({ product }) {
   }
 
   function addToCart() {
-      addProduct(product._id, letter, size, notes, quantity);
-    
+    addProduct(product._id, letter, size, notes, quantity);
+
     toast.success("Items added to cart!");
   }
 
@@ -249,13 +249,13 @@ export default function ProductPage({ product }) {
             )}
 
             <div>
-            <label
-                  htmlFor="OrderNotes"
-                  className="block md:text-base my-4 text-sm font-bold text-gray-900"
-                >
-                  {" "}
-                  Order Notes{" "}
-                </label>
+              <label
+                htmlFor="OrderNotes"
+                className="block md:text-base my-4 text-sm font-bold text-gray-900"
+              >
+                {" "}
+                Order Notes{" "}
+              </label>
 
               <textarea
                 id="OrderNotes"
