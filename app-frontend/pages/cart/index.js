@@ -17,8 +17,8 @@ export default function Cart() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
-  const [email, setEmail] = useState(session.user?.email || "");
-  const [name, setName] = useState(session.user?.name || "");
+  const [email, setEmail] = useState(session?.user?.email || "");
+  const [name, setName] = useState(session?.user?.name || "");
   const [phone, setPhone] = useState("");
 
   const [isSuccess, setIsSuccess] = useState(false);
@@ -98,7 +98,7 @@ export default function Cart() {
     return (
       <>
         <section className="flex justify-between space-x-4 max-md:flex-col ">
-          <div className="md:w-2/3 px-4">
+          <div className="md:w-2/3 mx-auto px-4">
             <div className="md:mt-6 mt-16">
               <header className="flex text-center justify-between w-full">
                 <h1 className="font-bold text-xl text-gray-900 sm:text-3xl">
@@ -116,7 +116,7 @@ export default function Cart() {
                       );
                       const { letter, size, quantity, notes } = product || {};
 
-                      console.log('specs: ', product)
+                      console.log("specs: ", product);
 
                       return (
                         <div
@@ -230,7 +230,7 @@ export default function Cart() {
                     </div>
                   </dl>
 
-                  <div className="flex justify-end">
+                  <div className="flex justify-between space-x-2">
                     <Link
                       className="inline-flex items-center gap-2 rounded border border-primary bg-primary px-8 py-3 text-white hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary"
                       href="/"
@@ -255,149 +255,17 @@ export default function Cart() {
                         />
                       </svg>
                     </Link>
+                    <Link
+                      className="inline-block rounded border border-green-600 px-12 py-3 text-sm font-medium text-green-600 hover:bg-green-600 hover:text-white focus:outline-none focus:ring active:bg-green-500"
+                      href="/checkout"
+                    >
+                      Checkout
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {!products?.length ? (
-            ""
-          ) : (
-            <div className="md:w-1/3 md:mt-6 mt-16">
-              <header className="flex text-center justify-between w-full">
-                <h1 className="font-bold text-xl text-gray-900 sm:text-3xl">
-                  Shipping Details
-                </h1>
-                <p className="text-base text-gray-600 sm:text-xl"></p>
-              </header>{" "}
-              <div class="mx-auto my-4 max-w-xl p-4 border shadow-lg h-[400px]">
-                <div class="space-y-5">
-                  <div class="grid grid-cols-12 gap-5">
-                    <div class="col-span-6">
-                      <label
-                        for="example7"
-                        class="mb-1 block text-sm font-medium text-gray-700"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="example7"
-                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                        placeholder="you@email.com"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                      />
-                    </div>
-                    <div class="col-span-6">
-                      <label
-                        for="example8"
-                        class="mb-1 block text-md font-medium text-gray-700"
-                      >
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        id="example8"
-                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                        placeholder=""
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
-                      />
-                    </div>
-                    <div class="col-span-12">
-                      <label
-                        for="example9"
-                        class="mb-1 block text-sm font-medium text-gray-700"
-                      >
-                        Address
-                      </label>
-                      <input
-                        type="text"
-                        id="example9"
-                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                        placeholder="1864 Main Street"
-                        value={address}
-                        onChange={(event) => setAddress(event.target.value)}
-                      />
-                    </div>
-                    <div class="col-span-6">
-                      <label
-                        for="example10"
-                        class="mb-1 block text-sm font-medium text-gray-700"
-                      >
-                        City
-                      </label>
-                      <input
-                        type="text"
-                        id="example10"
-                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                        placeholder=""
-                        value={city}
-                        onChange={(event) => setCity(event.target.value)}
-                      />
-                    </div>
-                    <div class="col-span-3">
-                      <label
-                        for="example11"
-                        class="mb-1 block text-sm font-medium text-gray-700"
-                      >
-                        State
-                      </label>
-                      <input
-                        type="text"
-                        id="example12"
-                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                        placeholder=""
-                        value={state}
-                        onChange={(event) => setState(event.target.value)}
-                      />
-                    </div>
-                    <div class="col-span-3">
-                      <label
-                        for="example12"
-                        class="mb-1 block text-sm font-medium text-gray-700"
-                      >
-                        Zip
-                      </label>
-                      <input
-                        type="text"
-                        id="example12"
-                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                        placeholder=""
-                        value={zip}
-                        onChange={(event) => setZip(event.target.value)}
-                      />
-                    </div>
-                    <div class="col-span-3">
-                      <label
-                        for="example12"
-                        class="mb-1 block text-sm font-medium text-gray-700"
-                      >
-                        phone
-                      </label>
-                      <input
-                        type="text"
-                        id="example12"
-                        class="block w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-                        placeholder=""
-                        value={phone}
-                        onChange={(event) => setPhone(event.target.value)}
-                      />
-                    </div>
-                    <div class="col-span-12  text-center">
-                      <button
-                        onClick={stripeCheckout}
-                        className="block w-full rounded border border-green-600 bg-green-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-green-600 focus:outline-none focus:ring active:text-green-500"
-                      >
-                        Checkout
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </section>
       </>
     );

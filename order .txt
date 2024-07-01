@@ -69,3 +69,5 @@ clear cart after order
 remove add button from product page
 remove sort by from products page
 header logo
+
+removing dummy data
