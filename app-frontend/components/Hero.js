@@ -62,12 +62,12 @@ export default function Hero({ product }) {
                 </h2>
 
                 <div className="flex gap-4 mt-10 items-center max-sm:justify-center max-sm:mt-6">
-                  <button
-                    onClick={addItemToCart}
+                  <Link
+                    href={'/products/' + product._id}
                     className="rounded-lg border border-primary bg-primary px-5 py-2.5 text-center text-md font-medium text-white shadow-sm transition-all hover:border-secondary hover:bg-secondary focus:ring focus:ring-primary disabled:cursor-not-allowed disabled:border-primary disabled:bg-primary"
                   >
-                    Add to cart
-                  </button>
+                    View Product
+                  </Link>
 
                   <Link
                     href={"/products"}
