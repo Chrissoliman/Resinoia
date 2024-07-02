@@ -76,6 +76,12 @@ export default function Products() {
                   <th scope="col" class="px-6 py-4 font-medium text-gray-900">
                     Price
                   </th>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Hero
+                  </th>
+                  <th scope="col" class="px-6 py-4 font-medium text-gray-900">
+                    Collection
+                  </th>
                   <th
                     scope="col"
                     class="px-6 py-4 font-medium text-gray-900"
@@ -105,6 +111,82 @@ export default function Products() {
                         : ""}
                     </td>
                     <td class="px-6 py-4">{product.price[0]}</td>
+                    <td class="px-6 py-4">
+                      {" "}
+                      {product.heroProduct == 'yes' ? (
+                        <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="h-3 w-3"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                          Yes
+                        </span>
+                      ) : (
+                        <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-3 w-3"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M6 18 18 6M6 6l12 12"
+                            />
+                          </svg>
+                          No
+                        </span>
+                      )}
+                    </td>
+                    <td class="px-6 py-4">
+                      {" "}
+                      {product.collectionProduct == 'yes' ? (
+                        <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="h-3 w-3"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                          Yes
+                        </span>
+                      ) : (
+                        <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="h-3 w-3"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M6 18 18 6M6 6l12 12"
+                            />
+                          </svg>
+                          No
+                        </span>
+                      )}
+                    </td>
                     <td class="flex justify-end gap-4 px-6 py-4 font-medium">
                       <Link
                         href={"/products/delete/" + product._id}
