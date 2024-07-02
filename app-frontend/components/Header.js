@@ -11,6 +11,13 @@ export default function Header() {
 
   const { data: session } = useSession();
 
+  console.log('cartProducts', cartProducts)
+
+  let productsQuantity = 0
+  for(const {quantity} of cartProducts) {
+    productsQuantity += quantity
+  }
+
   const active = "text-primary transition hover:text-secondary font-bold";
   const inactive =
     "text-gray-500 transition hover:text-gray-500/75 font-medium ";
@@ -95,7 +102,7 @@ export default function Header() {
                     />
                   </svg>
                   <span className="text-primary font-bold ml-1 group-hover:text-text">
-                    {cartProducts.length}
+                    {productsQuantity}
                   </span>
                 </Link>
               </div>
