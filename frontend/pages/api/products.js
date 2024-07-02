@@ -9,10 +9,10 @@ export default async function handle(req, res) {
 
 
     if( method == 'POST') {
-        const { title, description, price, images, category, heroProduct } = req.body
+        const { title, description, price, images, category, heroProduct, collectionProduct } = req.body
 
         const productDoc = await Product.create({
-            title, description, price, images, category, heroProduct
+            title, description, price, images, category, heroProduct, collectionProduct
         })
 
         res.json(productDoc)
@@ -28,8 +28,8 @@ export default async function handle(req, res) {
     }
 
     if( method == 'PUT') {
-        const { title, description, price, images, category, heroProduct, _id } = req.body
-        await Product.updateOne({_id}, {title, description, price, images, category, heroProduct})
+        const { title, description, price, images, category, heroProduct, collectionProduct, _id } = req.body
+        await Product.updateOne({_id}, {title, description, price, images, category, heroProduct, collectionProduct})
         res.json(true)
     }
 
