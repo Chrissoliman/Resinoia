@@ -57,15 +57,6 @@ export default function Header() {
                     </li>
                     <li>
                       <Link
-                        class={location.pathname === '/categories' ? active : inactive}
-                        href="/categories"
-                      >
-                        {" "}
-                        Categories{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
                         class={location.pathname === '/orders' ? active : inactive}
                         href="/orders"
                       >
@@ -73,17 +64,6 @@ export default function Header() {
                         Orders{" "}
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        class={location.pathname === '/settings' ? active : inactive}
-                        href="/settings"
-                      >
-                        {" "}
-                        Settings{" "}
-                      </Link>
-                    </li>
-
-
                   </ul>
                 </nav>
 

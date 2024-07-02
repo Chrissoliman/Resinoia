@@ -71,13 +71,14 @@ shipping places price-----------------------------------------------------------
 total price-------------------------------------------------------------------------------------------------------Done
 clear cart after order-------------------------------------------------------------------------------------------------------Done
 remove add button from product page-------------------------------------------------------------------------------------------------------Done
-remove sort by from products page
-adding query to get hero product and others
-header logo
+remove sort by from products page-------------------------------------------------------------------------------------------------------Done
+header logo -------------------------------------------------------------------------------------------------------Done
+remove categories and setting from admin header -------------------------------------------------------------------------------------------------------Done
+
 mobile version
 changing email to mirette in admin page
-remove categories and setting from admin header
-
+adding query to get hero product and others
+total income
 sort by
 
 removing dummy data
