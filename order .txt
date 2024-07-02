@@ -68,7 +68,7 @@ shipping places price
 10. account on both websites
 
 
-total price
+total price-------------------------------------------------------------------------------------------------------Done
 clear cart after order
 remove add button from product page
 remove sort by from products page
