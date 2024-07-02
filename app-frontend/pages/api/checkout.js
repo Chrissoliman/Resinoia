@@ -51,6 +51,7 @@ export default async function handler(req, res) {
             name: productInfo.title,
             price: productInfo.price,
             images: productInfo.images[0],
+            category: productInfo.category,
             letter,
             size,
             notes,
