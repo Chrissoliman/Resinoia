@@ -61,8 +61,22 @@ export default function Cart() {
 
   for (const { productId, quantity, letter, size } of cartProducts) {
     const product = products.find((p) => p._id === productId);
-    const price = product ? product.price : 0;
-    total += price * quantity;
+    let price = 0;
+    if (product?.category == "clock") {
+      price =
+        size == "25 Cm"
+          ? product.price[0]
+          : size == "30 Cm"
+          ? product.price[1]
+          : size == "35 Cm"
+          ? product.price[2]
+          : size == "40 Cm"
+          ? product.price[3]
+          : product.price[0];
+    } else {
+      price = product ? product.price[0] : 0;
+    }
+    total = total + price * quantity;
   }
 
   async function stripeCheckout() {
