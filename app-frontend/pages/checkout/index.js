@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Checkout() {
-  const { cartProducts } = useContext(CartContext);
+  const { cartProducts, clearCart } = useContext(CartContext);
   const { data: session } = useSession();
 
   const [products, setProducts] = useState([]);
@@ -126,6 +126,8 @@ export default function Checkout() {
       state,
       cartProducts,
     });
+
+    clearCart()
 
     if (response.data.url) {
       setIsSuccess(true);
