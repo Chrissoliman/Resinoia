@@ -10,6 +10,8 @@ export default function ProductPage({ product }) {
   const [size, setSize] = useState("25 Cm");
   const [letter, setLetter] = useState("");
   const [notes, setNotes] = useState("");
+  const [errors, setErrors] = useState({});
+
 
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
@@ -18,7 +20,19 @@ export default function ProductPage({ product }) {
     setMainImage(image);
   }
 
+  function validateForm() {
+    const newErrors = {};
+    if (!letter.trim()) newErrors.letter = "Please Choose a letter";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
   function addToCart() {
+    if (!validateForm()) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
     addProduct(product._id, letter, size, notes, quantity);
 
     toast.success("Items added to cart!");
@@ -122,6 +136,9 @@ export default function ProductPage({ product }) {
                   <option value="y">Y</option>
                   <option value="z">Z</option>
                 </select>
+                {errors.letter && letter == ''  && (
+                      <p className="text-red-500 text-xs mt-1 font-bold">{errors.letter}</p>
+                    )}
               </div>
             )}
 

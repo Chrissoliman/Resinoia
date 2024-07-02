@@ -105,7 +105,6 @@ export default function Checkout() {
     if (!address.trim()) newErrors.address = "Address is required";
     if (!city.trim()) newErrors.city = "City is required";
     if (!state.trim()) newErrors.state = "State is required";
-    if (!zip.trim()) newErrors.zip = "Zip code is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
