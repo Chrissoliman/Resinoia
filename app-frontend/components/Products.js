@@ -16,7 +16,7 @@ export default function Products({ products }) {
           {products?.length > 0 &&
             products.map((product) => (
               <div className="group relative" key={product.id}>
-                <div className="group block overflow-hidden border border-gray-950 rounded-xl border-opacity-10">
+                <div className="group block overflow-hidden border border-gray-950 rounded-xl border-opacity-10 max-sm:mb-4 max-sm:border-4">
                   <div className="">
                     <Link href={"/products/" + product._id}>
                       <div className="relative h-[300px] sm:h[300px]">

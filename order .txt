@@ -74,11 +74,14 @@ remove add button from product page---------------------------------------------
 remove sort by from products page-------------------------------------------------------------------------------------------------------Done
 header logo -------------------------------------------------------------------------------------------------------Done
 remove categories and setting from admin header -------------------------------------------------------------------------------------------------------Done
+adding query to get hero product and others--------------------------------------------------------------------------------Done
+cart number--------------------------------------------------------------------------------Done
+total income--------------------------------------------------------------------------------Done
+sort by--------------------------------------------------------------------------------Done
 
 mobile version
 changing email to mirette in admin page
-adding query to get hero product and others
-total income
-sort by
+resinoia logo white background
+
 
 removing dummy data
