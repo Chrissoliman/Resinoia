@@ -13,6 +13,7 @@ export default function Product({
   images: existingImages,
   category: existingCategory,
   heroProduct: existingHeroProduct,
+  collectionProduct: existingCollectionProduct,
 }) {
   const [redirect, setRedirect] = useState(false);
 
@@ -22,6 +23,7 @@ export default function Product({
   const [images, setImages] = useState(existingImages || []);
   const [category, setCategory] = useState(existingCategory || "");
   const [heroProduct, setHeroProduct] = useState(existingHeroProduct || "");
+  const [collectionProduct, setCollectionProduct] = useState(existingCollectionProduct || "");
   const [isuploading, setIsUploading] = useState(false);
 
   console.log("Prices: ", price);
@@ -45,6 +47,7 @@ export default function Product({
       images: flatImages,
       category,
       heroProduct,
+      collectionProduct,
     };
     if (_id) {
       await axios.put("/api/products", { ...data, _id });
@@ -401,6 +404,49 @@ export default function Product({
                   value="no"
                 />
                 <label for="heroNo" class="text-sm font-medium text-gray-700">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mx-auto my-4">
+          <div>
+            <label
+              for="example2"
+              class="mb-1 block text-lg font-medium text-gray-700 py-2"
+            >
+              Collection Section
+            </label>
+
+            <div class="mx-auto space-y-3">
+              <div class="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id="collectionyes"
+                  name="radioGroup3"
+                  checked={collectionProduct == "yes"}
+                  class="h-4 w-4 rounded-full border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400"
+                  onChange={(event) => setCollectionProduct("yes")}
+                  value="yes"
+                />
+                <label for="collectionyes" class="text-sm font-medium text-gray-700">
+                  Yes
+                </label>
+              </div>
+              <div class="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id="collectionno"
+                  checked={collectionProduct == "no"}
+                  name="radioGroup4"
+                  class="h-4 w-4 rounded-full border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400"
+                  onChange={(event) => setCollectionProduct("no")}
+                  value="no"
+                />
+                <label for="collectionno" class="text-sm font-medium text-gray-700">
                   No
                 </label>
               </div>
