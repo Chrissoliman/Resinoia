@@ -17,6 +17,7 @@ export default async function handler(req, res) {
     state,
     zip,
     phone,
+    totalPrice,
     cartProducts,
   } = req.body;
 
@@ -81,6 +82,7 @@ export default async function handler(req, res) {
     state,
     zip,
     phone,
+    totalPrice,
     status: false,
   });
 

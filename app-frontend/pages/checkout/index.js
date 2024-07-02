@@ -124,6 +124,7 @@ export default function Checkout() {
       zip,
       city,
       state,
+      totalPrice: total,
       cartProducts,
     });
 

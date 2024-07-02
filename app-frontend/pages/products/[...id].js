@@ -22,7 +22,7 @@ export default function ProductPage({ product }) {
 
   function validateForm() {
     const newErrors = {};
-    if (!letter.trim()) newErrors.letter = "Please Choose a letter";
+    if (product.category == 'letterKeyChain' && !letter.trim()) newErrors.letter = "Please Choose a letter";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
