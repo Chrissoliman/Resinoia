@@ -46,24 +46,48 @@ export default function ShowOrder() {
             <div className="bg-gray-100 max-w-full p-6 rounded-lg mt-6">
               <div className="flex flex-col md:flex-row space-y-6  md:justify-between md:space-x-10 items-center">
                 <div>
-                  <p className="text-gray-600">Date placed</p>
+                  <p className="text-gray-600 font-bold">Date placed</p>
                   <p>{orderInfo.createdAt}</p>
                 </div>
                 <div>
-                  <p className="text-gray-600">Order number</p>
+                  <p className="text-gray-600 font-bold">Order Id</p>
                   <p>{orderInfo._id}</p>
                 </div>
                 <div>
-                  <p className="text-gray-600">Address</p>
+                  <p className="text-gray-600 font-bold">Address</p>
                   <p>{orderInfo.address}</p>
                 </div>
                 <div>
-                  <p className="text-gray-600">Email</p>
+                  <p className="text-gray-600 font-bold">Email</p>
                   <p>{orderInfo.email}</p>
                 </div>
                 <div>
-                  <p className="text-gray-600">Phone</p>
+                  <p className="text-gray-600 font-bold">Phone</p>
                   <p>{orderInfo.phone}</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-100 max-w-full p-6 rounded-lg">
+              <div className="flex flex-col md:flex-row space-y-6  md:justify-between md:space-x-10 items-center">
+                <div>
+                  <p className="text-gray-600 font-bold ">Name</p>
+                  <p>{orderInfo.name}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-bold ">City</p>
+                  <p>{orderInfo.city}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-bold ">State</p>
+                  <p>{orderInfo.state}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-bold ">Zip</p>
+                  <p>{orderInfo.zip}</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-bold ">Status</p>
+                  <p>{orderInfo.status ? 'Done' : 'Not Done'}</p>
                 </div>
               </div>
             </div>
@@ -74,7 +98,7 @@ export default function ShowOrder() {
                   <tr>
                     <th className="px-6 py-2 text-left">Product</th>
                     <th className="px-6 py-2 text-left">Price</th>
-                    <th className="px-6 py-2 text-left">Size</th>
+                    <th className="px-6 py-2 text-left">Size | Letter</th>
                     <th className="px-6 py-2 text-left">Quantity</th>
                     <th className="px-6 py-2 text-left">Notes</th>
                   </tr>
@@ -93,9 +117,22 @@ export default function ShowOrder() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        {item.price_data.product_data.price} EGP
+                        {item.price_data.product_data.size == "25 Cm"
+                          ? item.price_data.product_data.price[0]
+                          : item.price_data.product_data.size == "30 Cm"
+                          ? item.price_data.product_data.price[1]
+                          : item.price_data.product_data.size == "35 Cm"
+                          ? item.price_data.product_data.price[2]
+                          : item.price_data.product_data.size == "40 Cm"
+                          ? item.price_data.product_data.price[3]
+                          : item.price_data.product_data.price[0]} EGP
                       </td>
-                      <td className="px-6 py-4">{item.size || "N/A"}</td>
+                      <td className="px-6 py-4">
+                        {item.price_data.product_data.category == "clock"
+                          ? item.price_data.product_data.size
+                          : item.price_data.product_data.category == "letterKeyChain"
+                          ? item.price_data.product_data.letter : "N/A"}
+                      </td>
                       <td className="px-6 py-4">{item.quantity}</td>
                       <td className="px-6 py-4">{item.notes || "N/A"}</td>
                     </tr>

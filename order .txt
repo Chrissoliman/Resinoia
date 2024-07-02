@@ -53,11 +53,13 @@ Instagram button to dm----------------------------------------------------------
 
 6. grid in admin page => products, orders, -----------------------------------------------------------------------Done
 
-7. order page in admin -> change done button to make a tick beside order
+7. order page in admin -> change done button to make a tick beside order -----------------------------------------Done
 
-7.1 order view page
+7.1 order view page ----------------------------------------------------------------------------------------------Done
 
 8. add footer ----------------------------------------------------------------------------------------------------Done
+
+shipping places price
 
 8.1.0 Validation for adding to cart
 
@@ -65,11 +67,12 @@ Instagram button to dm----------------------------------------------------------
 
 10. account on both websites
 
-shipping places price
+
 total price
 clear cart after order
 remove add button from product page
 remove sort by from products page
+adding query to get hero product and others
 header logo
 mobile version
 changing email to mirette in admin page
