@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 
 export default function Checkout() {
   const { cartProducts } = useContext(CartContext);
-
   const { data: session } = useSession();
 
   const [products, setProducts] = useState([]);
@@ -18,8 +17,12 @@ export default function Checkout() {
   const [email, setEmail] = useState(session?.user?.email || "");
   const [name, setName] = useState(session?.user?.name || "");
   const [phone, setPhone] = useState("");
-
+  const [shipping, setShipping] = useState("");
+  const [calculating, setCalculating] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Validation states
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -34,7 +37,6 @@ export default function Checkout() {
   }, [cartProducts]);
 
   let total = 0;
-
   for (const { productId, quantity, letter, size } of cartProducts) {
     const product = products.find((p) => p._id === productId);
     let price = 0;
@@ -55,7 +57,66 @@ export default function Checkout() {
     total = total + price * quantity;
   }
 
+  function changingCity(event) {
+    setCalculating(false);
+    setCity(event.target.value);
+
+    if (event.target.value == "Alexandria") {
+      setShipping(35);
+    } else if (event.target.value == "Cairo") {
+      setShipping(60);
+    } else if (
+      event.target.value == "Sharqia" ||
+      event.target.value == "Gharbia" ||
+      event.target.value == "Monufia" ||
+      event.target.value == "Damietta" ||
+      event.target.value == "Kafr El Sheikh" ||
+      event.target.value == "Dakahlia" ||
+      event.target.value == "Qalyubia" ||
+      event.target.value == "Ismailia" ||
+      event.target.value == "Suez" ||
+      event.target.value == "Port Said"
+    ) {
+      setShipping(70);
+    } else if (
+      event.target.value == "Faiyum" ||
+      event.target.value == "Beni Suef" ||
+      event.target.value == "Asyut" ||
+      event.target.value == "Minya" ||
+      event.target.value == "Sohag"
+    ) {
+      setShipping(90);
+    } else if (
+      event.target.value == "Red Sea" ||
+      event.target.value == "Qena" ||
+      event.target.value == "Luxor" ||
+      event.target.value == "Aswan"
+    ) {
+      setShipping(100);
+    }
+    setCalculating(true);
+  }
+
+  function validateForm() {
+    const newErrors = {};
+    if (!name.trim()) newErrors.name = "Name is required";
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (!phone.trim()) newErrors.phone = "Phone number is required";
+    if (!address.trim()) newErrors.address = "Address is required";
+    if (!city.trim()) newErrors.city = "City is required";
+    if (!state.trim()) newErrors.state = "State is required";
+    if (!zip.trim()) newErrors.zip = "Zip code is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
   async function stripeCheckout() {
+    if (!validateForm()) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
     const response = await axios.post("/api/checkout", {
       email: session.user.email,
       name: session.user.name,
@@ -63,6 +124,7 @@ export default function Checkout() {
       phone,
       zip,
       city,
+      state,
       cartProducts,
     });
 
@@ -151,8 +213,14 @@ export default function Checkout() {
               </div>
 
               <div className="md:absolute md:left-0 md:bottom-0 bg-primary w-full p-4">
+                <h3 className="flex flex-wrap gap-4 text-base text-text">
+                  Shipping{" "}
+                  <span className="ml-auto">
+                    {calculating ? `${shipping} EGP` : "Calculating..."}
+                  </span>
+                </h3>
                 <h4 className="flex flex-wrap gap-4 text-base text-text">
-                  Total <span className="ml-auto">{total} EGP</span>
+                  Total <span className="ml-auto">{total + shipping} EGP</span>
                 </h4>
               </div>
             </div>
@@ -172,36 +240,45 @@ export default function Checkout() {
                     <input
                       type="text"
                       placeholder="Full Name"
-                      className="px-4 py-3 bg-gray-50 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
+                      className="px-4 py-3 border-2 border-gray-200 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
                       value={name}
                       onChange={(event) => setName(event.target.value)}
                     />
+                    {errors.name && name == ''  && (
+                      <p className="text-red-500 text-xs mt-1 font-bold">{errors.name}</p>
+                    )}
                   </div>
 
                   <div>
                     <input
                       type="email"
                       placeholder="you@email.com"
-                      className="px-4 py-3 bg-gray-50 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
+                      className="px-4 py-3  border-2 border-gray-200 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                     />
+                    {errors.email && email == ''  && (
+                      <p className="text-red-500 text-xs mt-1 font-bold">{errors.email}</p>
+                    )}
                   </div>
 
                   <div>
                     <input
                       type="text"
                       placeholder="Phone Number"
-                      className="px-4 py-3 bg-gray-50 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
+                      className="px-4 py-3  border-2 border-gray-200 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
                       value={phone}
                       onChange={(event) => setPhone(event.target.value)}
                     />
+                    {errors.phone && phone == ''  && (
+                      <p className="text-red-500 text-xs mt-1 font-bold">{errors.phone}</p>
+                    )}
                   </div>
                 </div>
               </div>
 
               <div className="mt-8">
-                <h3 className="text-base font-bold text-gray-800 mb-4">
+                <h3 className="text-base font-bold text-gray-800 mb-1">
                   Shipping Address
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -209,37 +286,73 @@ export default function Checkout() {
                     <input
                       type="text"
                       placeholder="1864 Main Street"
-                      className="px-4 py-3 bg-gray-50 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
+                      className="mt-6 px-4 py-3  border-2 border-gray-200 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
                       value={address}
                       onChange={(event) => setAddress(event.target.value)}
                     />
+                    {errors.address && address == ''  && (
+                      <p className="text-red-500 text-xs mt-1 font-bold">{errors.address}</p>
+                    )}
                   </div>
                   <div>
-                    <input
-                      type="text"
-                      placeholder="City"
-                      className="px-4 py-3 bg-gray-50 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
+                    <label
+                      htmlFor="example2"
+                      className="mb-1 block text-sm font-medium text-gray-700"
+                    >
+                      Governorate
+                    </label>
+                    <select
+                      id="example2"
+                      className="px-4 py-3  border-2 border-gray-200 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
                       value={city}
-                      onChange={(event) => setCity(event.target.value)}
-                    />
+                      onChange={changingCity}
+                    >
+                      <option value="">Please Select</option>
+                      <option value="Alexandria">Alexandria</option>
+                      <option value="Aswan">Aswan</option>
+                      <option value="Asyut">Asyut</option>
+                      <option value="Beni Suef">Beni Suef</option>
+                      <option value="Cairo">Cairo</option>
+                      <option value="Dakahlia">Dakahlia</option>
+                      <option value="Damietta">Damietta</option>
+                      <option value="Faiyum">Faiyum</option>
+                      <option value="Gharbia">Gharbia</option>
+                      <option value="Ismailia">Ismailia</option>
+                      <option value="Kafr El Sheikh">Kafr El Sheikh</option>
+                      <option value="Luxor">Luxor</option>
+                      <option value="Minya">Minya</option>
+                      <option value="Monufia">Monufia</option>
+                      <option value="Port Said">Port Said</option>
+                      <option value="Qalyubia">Qalyubia</option>
+                      <option value="Qena">Qena</option>
+                      <option value="Red Sea">Red Sea</option>
+                      <option value="Sharqia">Sharqia</option>
+                      <option value="Sohag">Sohag</option>
+                      <option value="Suez">Suez</option>
+                    </select>
+                    {errors.city && city == ''  && (
+                      <p className="text-red-500 text-xs mt-1 font-bold">{errors.city}</p>
+                    )}
                   </div>
                   <div>
                     <input
                       type="text"
                       placeholder="State"
-                      className="px-4 py-3 bg-gray-50 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
+                      className="px-4 py-3  border-2 border-gray-200 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
                       value={state}
                       onChange={(event) => setState(event.target.value)}
                     />
+                    {errors.state && state == '' && (
+                      <p className="text-red-500 text-xs mt-1 font-bold">{errors.state}</p>
+                    )}
                   </div>
                   <div>
                     <input
                       type="text"
-                      placeholder="Zip Code"
-                      className="px-4 py-3 bg-gray-50 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
+                      placeholder="Zip Code (Optional)"
+                      className="px-4 py-3  border-2 border-gray-200 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-primary"
                       value={zip}
                       onChange={(event) => setZip(event.target.value)}
-                      required
                     />
                   </div>
                 </div>
