@@ -9,6 +9,7 @@ const OrderSchema = new Schema({
     state: String,
     address: String,
     phone: String,
+    totalPrice: Number,
     status: Boolean,
 }, { timestamps: true})
 
