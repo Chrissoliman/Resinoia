@@ -1,7 +1,6 @@
 import { CartContext } from "@/lib/cartContext";
 import Link from "next/link";
 import { useContext } from "react";
-import toast from "react-hot-toast";
 
 export default function Products({ products }) {
   const { addProduct } = useContext(CartContext);

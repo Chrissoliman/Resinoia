@@ -4,12 +4,7 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 
 export default function Hero({ product }) {
-  const { addProduct } = useContext(CartContext);
 
-  function addItemToCart() {
-    addProduct(product._id);
-    toast.success("Item added to cart!");
-  }
 
   if (product) {
     console.log(product);
