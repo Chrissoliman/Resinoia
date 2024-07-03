@@ -21,6 +21,13 @@ export default NextAuth({
     strategy: "jwt",
   },
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      if (user.email === 'Mirette@gmail.com') {
+        return true;
+      } else {
+        return false; // Return false to deny access
+      }
+    },
     async session({ session, token }) {
       return session;
     },
