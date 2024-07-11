@@ -1,21 +1,21 @@
 import axios from "axios";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const { data: session } = useSession();
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/products').then(res => {
-      setProducts(res.data)
-      setLoading(false)
-    })
-  }, [])
+    axios.get("/api/products").then((res) => {
+      setProducts(res.data);
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     axios.get("/api/orders").then((res) => {
@@ -24,13 +24,16 @@ export default function Home() {
     });
   }, []);
 
-  let totalIncome = 0
-
-  for (const {totalPrice} of orders) {
-    totalIncome += totalPrice
-  }
-
   
+  const totalIncome = useMemo(() => {
+    let totalIncomeSum = 0;
+    for (const { totalPrice } of orders) {
+      totalIncomeSum += totalPrice;
+    }
+
+    return totalIncomeSum;
+  }, [orders]);
+
   if (session) {
     return (
       <>
@@ -106,7 +109,6 @@ export default function Home() {
                 </div>
 
                 <div class="text-3xl text-black">{products.length}</div>
-
               </div>
             </div>
 
@@ -117,7 +119,6 @@ export default function Home() {
                 </div>
 
                 <div class="text-3xl text-black">{orders.length}</div>
-
               </div>
             </div>
 
@@ -128,7 +129,6 @@ export default function Home() {
                 </div>
 
                 <div class="text-3xl text-black">{totalIncome}</div>
-
               </div>
             </div>
           </div>

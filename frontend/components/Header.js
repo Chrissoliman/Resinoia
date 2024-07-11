@@ -1,15 +1,23 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const { data: session } = useSession();
 
-  const router = useRouter()
-  const {pathname} = router;
+  const router = useRouter();
+  const { pathname } = router;
 
-  const active = 'text-green-500 transition hover:text-gray-500/75 p-3 bg-gray-100 rounded-md'
-  const inactive = 'text-gray-500 transition hover:text-gray-500/75 p-3'
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  const active =
+    "text-green-500 transition hover:text-gray-500/75 p-3 bg-gray-100 rounded-md";
+  const inactive = "text-gray-500 transition hover:text-gray-500/75 p-3";
 
   if (session) {
     return (
@@ -39,7 +47,7 @@ export default function Header() {
                   <ul class="flex items-center gap-6 text-lg">
                     <li>
                       <Link
-                        class={location.pathname === '/' ? active : inactive}
+                        class={location.pathname === "/" ? active : inactive}
                         href="/"
                       >
                         {" "}
@@ -48,7 +56,9 @@ export default function Header() {
                     </li>
                     <li>
                       <Link
-                        class={location.pathname === '/products' ? active : inactive}
+                        class={
+                          location.pathname === "/products" ? active : inactive
+                        }
                         href="/products"
                       >
                         {" "}
@@ -57,7 +67,9 @@ export default function Header() {
                     </li>
                     <li>
                       <Link
-                        class={location.pathname === '/orders' ? active : inactive}
+                        class={
+                          location.pathname === "/orders" ? active : inactive
+                        }
                         href="/orders"
                       >
                         {" "}
@@ -78,24 +90,66 @@ export default function Header() {
                     </div>
                   </div>
 
-                  <div class="block md:hidden">
-                    <button class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M4 6h16M4 12h16M4 18h16"
-                        />
-                      </svg>
-                    </button>
-                  </div>
+                  <button
+                    className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden"
+                    onClick={toggleMenu}
+                  >
+                    <span className="sr-only">Toggle menu</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
+
+                  {isMenuOpen && (
+                    <div className="absolute top-14 left-0 w-full bg-white shadow-md z-50 md:hidden">
+                      <nav aria-label="Global">
+                        <ul className="flex flex-col items-center gap-6 text-sm py-4">
+                          <li>
+                            <Link
+                              className={pathname == "/" ? active : inactive}
+                              href="/"
+                              onClick={toggleMenu}
+                            >
+                              Dashboard
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              className={
+                                pathname == "/products" ? active : inactive
+                              }
+                              href="/products"
+                              onClick={toggleMenu}
+                            >
+                              Products
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              className={
+                                pathname == "/orders" ? active : inactive
+                              }
+                              href="/orders"
+                              onClick={toggleMenu}
+                            >
+                              Orders
+                            </Link>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
